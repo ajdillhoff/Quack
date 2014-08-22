@@ -2,28 +2,28 @@ Project Name: BroGL
 Language: C++
 Platform: Windows
 Description: Open source, object-oriented, software graphics rendering engine 
-			 for education. The project will be implemented over N milestones.
-			 Each new milestone will represent a new version of the engine.
+	     for education. The project will be implemented over N milestones.
+	     Each new milestone will represent a new version of the engine.
 
-% Milestons
+% Milestones
 Milestone 1: Basic Rendering
 Description: The first iteration of the engine should be able to render basic
-			 geometry. This will include representation of 3D geometric
-			 primitives, modeling, transformation, and basic rasterization.
+	     geometry. This will include representation of 3D geometric
+	     primitives, modeling, transformation, and basic rasterization.
 
 Milestone 2: Culling and Clipping
 Description: In this phase, back-face culling and view clipping capabilities
-			 will be added. 
+	     will be added. 
 
 Milestone 3: Lighting
 Description: Illumination is an advanced topic which makes this milestone one
-			 of the most involved. A basic lighting implementation is all that
-			 is required for this phase. In milestone 5, many optimizations
-			 will be added.
+	     of the most involved. A basic lighting implementation is all that
+	     is required for this phase. In milestone 5, many optimizations
+	     will be added.
 
 Milestone 4: Texturing and shading
 Description: Simple textures and shading, per-pixel.
 
 Milestone 5: Optimizations
 Description: Any additional features or performance issues will be addressed
-			 during this milestone.
+	     during this milestone.
