@@ -1,0 +1,4 @@
+Class: Model
+Description: This represents information about an individual model. All model
+			 properties are stored in this class. This includes world
+			 coordinates, textures, and other applicable attributes.

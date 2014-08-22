@@ -1,0 +1,10 @@
+Class: Render
+Description: The main rendering class. Responsible for handling the rendering
+			 process necessary to display 3D geometry.
+
+Requirements
+1. Model & View Transformations
+2. Vertex Shading
+3. Projection
+4. Clipping
+5. Screen Mapping
