@@ -8,3 +8,19 @@ Requirements
 3. Projection
 4. Clipping
 5. Screen Mapping
+
+Class Methods - Not extensive
+% Ultimately, the view is rendered after all scenes are loaded
+RenderView
+
+% Given all of the objects (world, entity, etc.), generate the surfaces to be
+% drawn for the given frame. The projection setup is also called here.
+GenerateDrawSurfaces
+
+% After the frame has been generated, pass all of the vertices of the view to
+% this method. Send the points to OpenGL for displaying in the current window.
+DrawPolygon
+
+% Create the projection matrix necessary for rendering this view properly from
+% the observer's perspective.
+SetupProjectionMatrix
