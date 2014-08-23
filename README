@@ -4,6 +4,7 @@ Platform: Windows
 Description: Open source, object-oriented, software graphics rendering engine 
 	     for education. The project will be implemented over N milestones.
 	     Each new milestone will represent a new version of the engine.
+Dependencies: FreeGLUT and GLEW
 
 % Milestones
 Milestone 1: Basic Rendering
