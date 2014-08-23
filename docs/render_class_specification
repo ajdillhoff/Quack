@@ -1,6 +1,6 @@
 Class: Render
 Description: The main rendering class. Responsible for handling the rendering
-			 process necessary to display 3D geometry.
+			       process necessary to display 3D geometry.
 
 Requirements
 1. Model & View Transformations

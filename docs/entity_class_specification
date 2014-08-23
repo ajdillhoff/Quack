@@ -1,6 +1,6 @@
 Class: Entity
 Description: Entities are generic representations of what is being viewed in
-			 the world. These could be models, lights, sprites or polys.
+			       the world. These could be models, lights, sprites or polys.
 
 Class Members
 - Origin

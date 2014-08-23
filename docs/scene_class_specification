@@ -1,4 +1,4 @@
 Class: Scene
 Description: The scene will contain all model objects that make up the current
-			 environment to be rendered. This can also include specific view
-			 specifications, lighting, and other materials.
+			       environment to be rendered. This can also include specific view
+			       specifications, lighting, and other materials.
