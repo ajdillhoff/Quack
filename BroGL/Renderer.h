@@ -7,6 +7,7 @@ class Renderer {
 public:
 	CDC *pDC;
 	float projectionMatrix[16];
+	Scene *currentScene;
 
 	Renderer();
 	Renderer(CDC*);

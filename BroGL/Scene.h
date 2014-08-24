@@ -5,6 +5,16 @@ public:
 	virtual ~Scene();
 
 	//************************************
+	// Method:    AddEntityToScene
+	// FullName:  Scene::AddEntityToScene
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: Entity * entity
+	//************************************
+	void AddEntityToScene(Entity *entity);
+
+	//************************************
 	// Method:    AddPolygonToScene
 	// FullName:  Scene::AddPolygonToScene
 	// Access:    public 

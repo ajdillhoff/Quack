@@ -8,6 +8,18 @@ Scene::~Scene() {
 }
 
 //************************************
+// Method:    AddEntityToScene
+// FullName:  Scene::AddEntityToScene
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: Entity * entity
+//************************************
+void Scene::AddEntityToScene(Entity *entity) {
+	// Add the entity to the rendering list
+}
+
+//************************************
 // Method:    AddPolygonToScene
 // FullName:  Scene::AddPolygonToScene
 // Access:    public 
