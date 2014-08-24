@@ -86,7 +86,7 @@ void Renderer::RenderDrawSurfaceList(int surfaceType, int numDrawSurfaces) {
 
 		// Set up the model view matrix, if necessary
 
-		// Add the triangles
+		// Add the triangles to an index array
 
 		// Draw the surface
 		// Note: Look into use glDrawElements instead of glDrawArrays
