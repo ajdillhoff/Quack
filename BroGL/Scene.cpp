@@ -21,7 +21,7 @@ Scene::~Scene() {
 //************************************
 void Scene::AddEntityToScene(Entity *entity) {
 	// Add the entity to the rendering list
-	re->entities[re->numEntities++] = *entity;
+	re->refdef->entities[re->refdef->numEntities++] = *entity;
 
 	// Probably useless, but gives us a count for each scene
 	numEntities++;
@@ -59,26 +59,25 @@ void Scene::AddPolygonSurfaces() {
 // Returns:   void
 // Qualifier:
 //************************************
-void Scene::RenderScene(Camera *camera) {
+void Scene::RenderScene(RefDef *rd) {
 	viewParms_t parms;
 
-	re->camera = camera;
-	// Copy scene surfaces to renderer global list
+	re->refdef->camera = rd->camera;
 
-	// Set up view parameters
+	// Set up view parameters for initial view
 	memset(&parms, 0, sizeof(parms));
-	parms.viewPortX = re->camera->x;
-	parms.viewPortY = re->camera->y;
-	parms.viewPortWidth = re->camera->width;
-	parms.viewPortHeight = re->camera->height;
+	parms.viewPortX = re->refdef->camera->x;
+	parms.viewPortY = re->refdef->camera->y;
+	parms.viewPortWidth = re->refdef->camera->width;
+	parms.viewPortHeight = re->refdef->camera->height;
 
-	parms.fovX = re->camera->fov_x;
-	parms.fovY = re->camera->fov_y;
+	parms.fovX = re->refdef->camera->fov_x;
+	parms.fovY = re->refdef->camera->fov_y;
 
-	VectorCopy(re->camera->viewOrigin, parms.or.origin);
-	VectorCopy(re->camera->viewMatrix[0], parms.or.axis[0]);
-	VectorCopy(re->camera->viewMatrix[1], parms.or.axis[1]);
-	VectorCopy(re->camera->viewMatrix[2], parms.or.axis[2]);
+	VectorCopy(re->refdef->camera->viewOrigin, parms.or.origin);
+	VectorCopy(re->refdef->camera->viewMatrix[0], parms.or.axis[0]);
+	VectorCopy(re->refdef->camera->viewMatrix[1], parms.or.axis[1]);
+	VectorCopy(re->refdef->camera->viewMatrix[2], parms.or.axis[2]);
 
 	// Render the view
 	re->RenderView(&parms);

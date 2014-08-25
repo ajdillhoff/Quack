@@ -2,6 +2,7 @@
 
 #define SHADER_MAX_VERTICES 1000
 #define SHADER_MAX_INDICES (6*SHADER_MAX_VERTICES)
+#define MAX_ENTITIES 100
 
 // Copied from q_shared.h in Q3 engine
 #define DotProduct(x,y)			((x)[0]*(y)[0]+(x)[1]*(y)[1]+(x)[2]*(y)[2])

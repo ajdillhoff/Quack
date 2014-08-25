@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <math.h>
-#include "Camera.h"
+#include "RefDef.h"
 #include "Types.h"
 #include "Entity.h"
 #include <GL/freeglut.h>
@@ -16,14 +16,8 @@ public:
 	shaderCommands_t input;
 
 	// Object information
-	int numEntities;
-	Entity *entities;
 	Entity *currentEntity;
-
-	int numPolys;
-	poly *polys;
-
-	Camera *camera;
+	RefDef *refdef;
 
 	Renderer();
 	virtual ~Renderer();

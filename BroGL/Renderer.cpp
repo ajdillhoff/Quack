@@ -10,18 +10,13 @@ static float	s_flipMatrix[16] = {
 };
 
 Renderer::Renderer() {
-	entities = new Entity[4];
-	numEntities = 0;
-
-	// Set up some default camera
-	camera = new Camera();
+	refdef = new RefDef();
 
 	// Set up some default view parameters
 }
 
 Renderer::~Renderer() {
-	delete camera;
-	//delete[] entities;
+	delete refdef;
 }
 
 //************************************
@@ -143,7 +138,7 @@ void Renderer::RenderDrawSurfaceList(int surfaceType, int numDrawSurfaces) {
 	int i;
 
 	// Perform any actions required before drawing the view (set model view, etc.)
-	// BeginDrawingView();
+	BeginDrawingView();
 
 	// Draw loop
 	for (i = 0; i < numDrawSurfaces; i++) {
@@ -155,11 +150,12 @@ void Renderer::RenderDrawSurfaceList(int surfaceType, int numDrawSurfaces) {
 		glLoadMatrixf(orientation.modelMatrix);
 
 		// Add the triangles to an index array
-		SurfacePolychain(polys);
+		SurfacePolychain(refdef->polys);
 	}
 
 	// Draw the surface
 	// EndSurface();
+	DrawTris();
 
 	// Reset the model view matrix
 	glLoadMatrixf(viewParms.world.modelMatrix);
@@ -178,9 +174,9 @@ void Renderer::RenderView(viewParms_t *parms)
 	viewParms = *parms;
 
 	// Rotate for viewer
-	// RotateForViewer();
+	RotateForViewer();
 
-	// Generate all of the surfaces to be drawn
+	// Generate all of the surfaces/polys to be drawn
 	GenerateDrawSurfaces();
 
 	// Draw the view
@@ -235,6 +231,8 @@ void Renderer::RotateForEntity(Entity *ent, viewParms_t *parms, orientation_t *o
 // Access:    public 
 // Returns:   void
 // Qualifier:
+// Description: Builds the "world-to-camera" matrix by taking the origin and
+//              rotation information given.
 //************************************
 void Renderer::RotateForViewer() {
 	float	viewerMatrix[16];

@@ -81,8 +81,14 @@ void RenderFunction(void) {
 	Entity *ent = new Entity();
 	ent->GenerateTestEntity();
 
+	RefDef *rd = new RefDef();
+	rd->AddEntity(ent);
+
 	Scene *sc = new Scene(re);
-	sc->AddEntityToScene(ent);
+
+	// Add the first entity
+	sc->AddEntityToScene(&rd->entities[0]);
+	sc->RenderScene(rd);
 
 	glutSwapBuffers();
 }

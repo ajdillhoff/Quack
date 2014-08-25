@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "Renderer.h"
+#include "RefDef.h"
 
 #pragma once
 class Scene {
@@ -50,6 +51,6 @@ public:
 	// Returns:   void
 	// Qualifier:
 	//************************************
-	void RenderScene(Camera *camera);
+	void RenderScene(RefDef *rd);
 };
 
