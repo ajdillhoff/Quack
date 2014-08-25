@@ -1,7 +1,15 @@
+#include "Entity.h"
+#include "Renderer.h"
+
 #pragma once
 class Scene {
 public:
+	Renderer *re;
+
+	int numEntities;
+
 	Scene();
+	Scene(Renderer *);
 	virtual ~Scene();
 
 	//************************************
@@ -42,6 +50,6 @@ public:
 	// Returns:   void
 	// Qualifier:
 	//************************************
-	void RenderScene();
+	void RenderScene(Camera *camera);
 };
 

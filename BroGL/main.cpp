@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <GL/freeglut.h>
+//#include <GL/freeglut.h>
+
+#include "Scene.h"
+#include "Renderer.h"
 
 #define WINDOW_TITLE_PREFIX "BroGL"
 
@@ -72,6 +75,14 @@ void ResizeFunction(int Width, int Height) {
 
 void RenderFunction(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	Renderer *re = new Renderer();
+
+	Entity *ent = new Entity();
+	ent->GenerateTestEntity();
+
+	Scene *sc = new Scene(re);
+	sc->AddEntityToScene(ent);
 
 	glutSwapBuffers();
 }

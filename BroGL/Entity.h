@@ -7,10 +7,10 @@ public:
 	virtual ~Entity();
 
 	// Used for testing and debugging
-	void TestEntity();
+	void GenerateTestEntity();
 
-	float[3] direction[3];
-	float origin[3];
+	vec3 direction[3];
+	vec3 origin;
 	poly *polys;
 };
 

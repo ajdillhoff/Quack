@@ -4,6 +4,10 @@
 Scene::Scene() {
 }
 
+Scene::Scene(Renderer *newRenderer) {
+	re = newRenderer;
+}
+
 Scene::~Scene() {
 }
 
@@ -17,6 +21,10 @@ Scene::~Scene() {
 //************************************
 void Scene::AddEntityToScene(Entity *entity) {
 	// Add the entity to the rendering list
+	re->entities[re->numEntities++] = *entity;
+
+	// Probably useless, but gives us a count for each scene
+	numEntities++;
 }
 
 //************************************
@@ -29,7 +37,7 @@ void Scene::AddEntityToScene(Entity *entity) {
 // Parameter: float * verts
 // Parameter: int numPolygons
 //************************************
-void Renderer::AddPolygonToScene(int numVerts, float *verts, int numPolygons) {
+void Scene::AddPolygonToScene(int numVerts, float *verts, int numPolygons) {
 	// For each poly, add the verts to the global vert list
 }
 
@@ -40,7 +48,7 @@ void Renderer::AddPolygonToScene(int numVerts, float *verts, int numPolygons) {
 // Returns:   void
 // Qualifier:
 //************************************
-void Renderer::AddPolygonSurfaces() {
+void Scene::AddPolygonSurfaces() {
 	// For each poly, add the drawing surface to the renderer surface list
 }
 
@@ -51,10 +59,27 @@ void Renderer::AddPolygonSurfaces() {
 // Returns:   void
 // Qualifier:
 //************************************
-void Renderer::RenderScene() {
+void Scene::RenderScene(Camera *camera) {
+	viewParms_t parms;
+
+	re->camera = camera;
 	// Copy scene surfaces to renderer global list
 
 	// Set up view parameters
+	memset(&parms, 0, sizeof(parms));
+	parms.viewPortX = re->camera->x;
+	parms.viewPortY = re->camera->y;
+	parms.viewPortWidth = re->camera->width;
+	parms.viewPortHeight = re->camera->height;
+
+	parms.fovX = re->camera->fov_x;
+	parms.fovY = re->camera->fov_y;
+
+	VectorCopy(re->camera->viewOrigin, parms.or.origin);
+	VectorCopy(re->camera->viewMatrix[0], parms.or.axis[0]);
+	VectorCopy(re->camera->viewMatrix[1], parms.or.axis[1]);
+	VectorCopy(re->camera->viewMatrix[2], parms.or.axis[2]);
 
 	// Render the view
+	re->RenderView(&parms);
 }
