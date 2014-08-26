@@ -36,6 +36,9 @@
     <ClCompile Include="BMath.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BShared.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

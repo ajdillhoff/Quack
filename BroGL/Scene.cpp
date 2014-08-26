@@ -37,8 +37,17 @@ void Scene::AddEntityToScene(Entity *entity) {
 // Parameter: float * verts
 // Parameter: int numPolygons
 //************************************
-void Scene::AddPolygonToScene(int numVerts, float *verts, int numPolygons) {
+void Scene::AddPolygonToScene(int numVerts, vert *verts, int numPolygons) {
 	// For each poly, add the verts to the global vert list
+	poly_t *poly;
+	int i, j;
+
+	for (j = 0; j < numPolygons; j++) {
+		poly = &re->refdef->polys[re->refdef->numPolys];
+		poly->surfaceType = SF_POLY;
+		poly->numVerts = numVerts;
+		//poly->verts = &re->refdef->po
+	}
 }
 
 //************************************

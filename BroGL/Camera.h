@@ -1,4 +1,5 @@
 #include "Types.h"
+#include "BShared.h"
 
 #pragma once
 class Camera {

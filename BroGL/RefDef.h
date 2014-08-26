@@ -11,10 +11,23 @@ public:
 	Entity entities[MAX_ENTITIES];
 
 	int numPolys;
-	poly *polys;
+	struct poly_s *polys;
+
+	int numDrawSurfs;
+	struct drawSurf_s *drawSurfs;
 
 	RefDef();
 	virtual ~RefDef();
+
+	//************************************
+	// Method:    AddDrawSurf
+	// FullName:  RefDef::AddDrawSurf
+	// Access:    public 
+	// Returns:   int
+	// Qualifier:
+	// Parameter: surfaceType_t * surface
+	//************************************
+	int AddDrawSurf(surfaceType_t *surface);
 
 	//************************************
 	// Method:    AddEntity

@@ -11,6 +11,6 @@ public:
 
 	vec3 direction[3];
 	vec3 origin;
-	poly *polys;
+	poly_t *polys;
 };
 

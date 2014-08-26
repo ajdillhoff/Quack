@@ -23,6 +23,16 @@ public:
 	virtual ~Renderer();
 
 	//************************************
+	// Method:    AddDrawSurface
+	// FullName:  Renderer::AddDrawSurface
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: surfaceType_t * s
+	//************************************
+	void AddDrawSurface(surfaceType_t *s);
+
+	//************************************
 	// Method:    BeginDrawingView
 	// FullName:  Renderer::BeginDrawingView
 	// Access:    public 
@@ -142,6 +152,6 @@ public:
 	// Qualifier:
 	// Parameter: poly * p
 	//************************************
-	void SurfacePolychain(poly *p);
+	void SurfacePolychain(poly_t *p);
 };
 

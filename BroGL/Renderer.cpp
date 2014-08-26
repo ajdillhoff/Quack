@@ -20,6 +20,18 @@ Renderer::~Renderer() {
 }
 
 //************************************
+// Method:    AddDrawSurface
+// FullName:  Renderer::AddDrawSurface
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: surfaceType_t * s
+//************************************
+void Renderer::AddDrawSurface(surfaceType_t *s) {
+	refdef->AddDrawSurf(s);
+}
+
+//************************************
 // Method:    BeginDrawingView
 // FullName:  Renderer::BeginDrawingView
 // Access:    public 
@@ -94,6 +106,15 @@ void Renderer::DrawTris() {
 //************************************
 void Renderer::GenerateDrawSurfaces() {
 	// Add all of the different types of surfaces necessary
+	// call back to the scene in order to get all of the polys
+	// TODO: Let's just put something in the mean time...
+	int i;
+	poly_t *poly;
+
+	for (i = 0, poly = refdef->polys; i < refdef->numPolys; i++, poly++) {
+		// Add the poly 
+		refdef->AddDrawSurf(reinterpret_cast<surfaceType_t*>(poly));
+	}
 
 	// Setup the projection matrix
 	SetupProjectionMatrix();
@@ -319,7 +340,7 @@ void Renderer::SetupProjectionMatrix() {
 // Qualifier:
 // Parameter: poly * p
 //************************************
-void Renderer::SurfacePolychain(poly *p) {
+void Renderer::SurfacePolychain(poly_t *p) {
 	int i, numVertices;
 
 	numVertices = input.numVertices;

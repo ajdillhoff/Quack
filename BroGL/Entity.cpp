@@ -32,7 +32,7 @@ void Entity::GenerateTestEntity() {
 	v5.xyz[1] = 0.0;
 	v5.xyz[2] = 1.0;
 
-	poly p1, p2, p3, p4;
+	poly_t p1, p2, p3, p4;
 
 	p1.numVerts = 3;
 	p1.verts = new vert[p1.numVerts];
@@ -58,7 +58,7 @@ void Entity::GenerateTestEntity() {
 	p4.verts[1] = v2;
 	p4.verts[2] = v1;
 
-	polys = new poly[4];
+	polys = new poly_t[4];
 	polys[0] = p1;
 	polys[1] = p2;
 	polys[2] = p3;

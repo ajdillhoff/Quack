@@ -5,11 +5,28 @@ RefDef::RefDef() {
 	camera = new Camera();
 	numEntities = 0;
 	numPolys = 0;
+	numDrawSurfs = 0;
 }
 
 
 RefDef::~RefDef() {
 	delete camera;
+}
+
+//************************************
+// Method:    AddDrawSurf
+// FullName:  RefDef::AddDrawSurf
+// Access:    public 
+// Returns:   int
+// Qualifier:
+// Parameter: surfaceType_t * surface
+//************************************
+int RefDef::AddDrawSurf(surfaceType_t *surface) {
+	int i = numDrawSurfs;
+
+	drawSurfs[numDrawSurfs++].surface = surface;
+
+	return i;
 }
 
 //************************************
