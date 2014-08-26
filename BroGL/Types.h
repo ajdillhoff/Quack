@@ -5,6 +5,8 @@
 #define SHADER_MAX_VERTICES 1000
 #define SHADER_MAX_INDICES (6*SHADER_MAX_VERTICES)
 #define MAX_ENTITIES 100
+#define MAX_POLYS 1000
+#define MAX_POLYVERTS 5000
 
 typedef struct {
 	vec3 xyz;

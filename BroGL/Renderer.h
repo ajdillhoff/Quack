@@ -19,6 +19,14 @@ public:
 	Entity *currentEntity;
 	RefDef *refdef;
 
+	//drawSurf_t drawSurfs[MAX_DRAWSURFS];
+	Entity entities[MAX_ENTITIES];
+
+	int numPolys;
+	int numPolyVerts;
+	poly_t *polys;
+	vert *polyVerts;
+
 	Renderer();
 	virtual ~Renderer();
 

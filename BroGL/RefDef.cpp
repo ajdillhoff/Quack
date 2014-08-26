@@ -24,6 +24,7 @@ RefDef::~RefDef() {
 int RefDef::AddDrawSurf(surfaceType_t *surface) {
 	int i = numDrawSurfs;
 
+	// TODO: Access violation writing location
 	drawSurfs[numDrawSurfs++].surface = surface;
 
 	return i;

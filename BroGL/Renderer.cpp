@@ -12,6 +12,9 @@ static float	s_flipMatrix[16] = {
 Renderer::Renderer() {
 	refdef = new RefDef();
 
+	polys = new poly_t[MAX_POLYS];
+	polyVerts = new vert[MAX_POLYVERTS];
+
 	// Set up some default view parameters
 }
 

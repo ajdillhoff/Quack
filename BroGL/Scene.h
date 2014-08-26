@@ -33,7 +33,7 @@ public:
 	// Parameter: float * verts
 	// Parameter: int numPolygons
 	//************************************
-	void AddPolygonToScene(int numVerts, float *verts, int numPolygons);
+	void AddPolygonToScene(int numVerts, vert *verts, int numPolygons);
 
 	//************************************
 	// Method:    AddPolygonSurfaces
