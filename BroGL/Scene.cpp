@@ -83,6 +83,8 @@ void Scene::RenderScene(RefDef *rd) {
 	re->refdef->camera = rd->camera;
 
 	// info about assets to be drawn
+	re->refdef->drawSurfs = re->drawSurfs;
+
 	re->refdef->numPolys = re->numPolys;
 	re->refdef->polys = &re->polys[0];
 

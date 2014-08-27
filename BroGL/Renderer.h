@@ -22,6 +22,8 @@ public:
 	//drawSurf_t drawSurfs[MAX_DRAWSURFS];
 	Entity entities[MAX_ENTITIES];
 
+	drawSurf_t drawSurfs[MAX_DRAWSURFS];
+
 	int numPolys;
 	int numPolyVerts;
 	poly_t *polys;
@@ -109,7 +111,7 @@ public:
 	// Qualifier:
 	// Description: The entry point for the rendering of polys or surfaces
 	//************************************
-	void RenderDrawSurfaceList(int, int);
+	void RenderDrawSurfaceList(drawSurf_t *, int);
 
 	//************************************
 	// Method:    RenderView

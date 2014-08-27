@@ -85,7 +85,7 @@ void Renderer::DrawSurfaces() {
 	// All of our data should be loaded in during this call.
 
 	// Render the drawing list
-	RenderDrawSurfaceList(0, 0);
+	RenderDrawSurfaceList(refdef->drawSurfs, refdef->numDrawSurfs);
 }
 
 //************************************
@@ -157,7 +157,7 @@ void Renderer::MyGlMultMatrix(const float *a, const float *b, float *out) {
 // Parameter: int numDrawSurfaces
 // Description: The entry point for the rendering of surfaces
 //************************************
-void Renderer::RenderDrawSurfaceList(int surfaceType, int numDrawSurfaces) {
+void Renderer::RenderDrawSurfaceList(drawSurf_t *surfaceType, int numDrawSurfaces) {
 	// local variables
 	int i;
 
@@ -170,7 +170,7 @@ void Renderer::RenderDrawSurfaceList(int surfaceType, int numDrawSurfaces) {
 		// BeginSurface();
 
 		// Set up the model view matrix, if necessary
-		RotateForEntity(currentEntity, &viewParms, &orientation);
+		//RotateForEntity(currentEntity, &viewParms, &orientation);
 		glLoadMatrixf(orientation.modelMatrix);
 
 		// Add the triangles to an index array

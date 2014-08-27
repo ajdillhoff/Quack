@@ -7,6 +7,7 @@
 #define MAX_ENTITIES 100
 #define MAX_POLYS 1000
 #define MAX_POLYVERTS 5000
+#define MAX_DRAWSURFS 0x1000
 
 typedef struct {
 	vec3 xyz;
