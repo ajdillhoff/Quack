@@ -27,6 +27,10 @@ Camera::Camera() {
 	viewMatrix[2][0] = 0.0;
 	viewMatrix[2][1] = 0.0;
 	viewMatrix[2][2] = 1.0;
+
+	//vec3 angles = { 0, 0, 0 };
+
+	//AngleVectors(angles, viewMatrix[0], viewMatrix[1], viewMatrix[2]);
 }
 
 

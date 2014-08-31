@@ -33,11 +33,11 @@
     <ClCompile Include="RefDef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BMath.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BShared.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BMath.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

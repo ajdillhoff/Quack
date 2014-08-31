@@ -8,6 +8,12 @@ RefDef::RefDef() {
 	numDrawSurfs = 0;
 }
 
+RefDef::RefDef(Camera *nc) {
+	camera = nc;
+	numEntities = 0;
+	numPolys = 0;
+	numDrawSurfs = 0;
+}
 
 RefDef::~RefDef() {
 	delete camera;

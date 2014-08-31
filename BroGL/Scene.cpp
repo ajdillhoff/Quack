@@ -40,7 +40,7 @@ void Scene::AddEntityToScene(Entity *entity) {
 void Scene::AddPolygonToScene(int numVerts, vert *verts, int numPolygons) {
 	// For each poly, add the verts to the global vert list
 	poly_t *poly;
-	int i, j;
+	int j;
 
 	for (j = 0; j < numPolygons; j++) {
 		if (re->numPolyVerts + numVerts > MAX_POLYVERTS || re->numPolys >= MAX_POLYS) {

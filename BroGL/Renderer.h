@@ -79,7 +79,7 @@ public:
 	// Returns:   void
 	// Qualifier:
 	//************************************
-	void DrawTris();
+	void DrawTris(shaderCommands_t*);
 
 	//************************************
 	// Method:    GenerateDrawSurfaces

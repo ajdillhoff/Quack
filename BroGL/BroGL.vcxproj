@@ -67,7 +67,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BMath.c" />
+    <ClCompile Include="BMath.cpp" />
     <ClCompile Include="BShared.h" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />

@@ -11,9 +11,11 @@
 int CurrentWidth = 800,
 CurrentHeight = 600,
 WindowHandle = 0;
+Camera *camera = new Camera();
 
 void Initialize(int, char*[]);
 void InitWindow(int, char*[]);
+void Keyboard(unsigned char, int, int);
 void ResizeFunction(int, int);
 void RenderFunction(void);
 
@@ -51,7 +53,7 @@ void InitWindow(int argc, char* argv[]) {
 
 	glutInitWindowSize(CurrentWidth, CurrentHeight);
 
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 
 	WindowHandle = glutCreateWindow(WINDOW_TITLE_PREFIX);
 
@@ -65,6 +67,39 @@ void InitWindow(int argc, char* argv[]) {
 
 	glutReshapeFunc(ResizeFunction);
 	glutDisplayFunc(RenderFunction);
+	glutKeyboardFunc(Keyboard);
+
+	glutMainLoop();
+}
+
+void Keyboard(unsigned char key, int x, int y) {
+	switch (key) {
+	case 'w':
+		// Translate positive z axis
+		camera->viewOrigin[2] += 0.5;
+		break;
+	case 'a':
+		// Turn left
+		break;
+	case 's':
+		// Translate negative z axis
+		camera->viewOrigin[2] -= 0.5;
+		break;
+	case 'd':
+		// Turn right
+		break;
+	case 'r':
+		// Translate positive y axis
+		camera->viewOrigin[1] += 0.5;
+		break;
+	case 'f':
+		// Translate negative y axis
+		camera->viewOrigin[1] -= 0.5;
+		break;
+	default:
+		break;
+	}
+	glutPostRedisplay();
 }
 
 void ResizeFunction(int Width, int Height) {
@@ -74,11 +109,11 @@ void ResizeFunction(int Width, int Height) {
 }
 
 void RenderFunction(void) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	Renderer *re = new Renderer();
 
-	RefDef *rd = new RefDef();
+	RefDef *rd = new RefDef(camera);
 
 	/*** TEST ***/
 	//poly_t *polys;

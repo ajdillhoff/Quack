@@ -17,6 +17,7 @@ public:
 	struct drawSurf_s *drawSurfs;
 
 	RefDef();
+	RefDef(Camera*);
 	virtual ~RefDef();
 
 	//************************************

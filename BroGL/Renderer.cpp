@@ -9,6 +9,13 @@ static float	s_flipMatrix[16] = {
 	0, 0, 0, 1
 };
 
+static float s_identityMatrix[16] = {
+	1, 0, 0, 0,
+	0, 1, 0, 0,
+	0, 0, 1, 0,
+	0, 0, 0, 1
+};
+
 Renderer::Renderer() {
 	refdef = new RefDef();
 
@@ -95,8 +102,22 @@ void Renderer::DrawSurfaces() {
 // Returns:   void
 // Qualifier:
 //************************************
-void Renderer::DrawTris() {
-
+void Renderer::DrawTris(shaderCommands_t *input) {
+	glColor3f(1, 0, 0);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glDepthRange(0, 0);
+	//glDisableClientState(GL_COLOR_ARRAY);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 16, input->xyz);
+	glDrawElements(GL_TRIANGLES, input->numIndices, GL_UNSIGNED_INT, input->indexes);
+	//glBegin(GL_POLYGON);
+	//for (int i = 0; i < input->numVertices; i++) {
+	//	glVertex3fv(*input->xyz + i * 3);
+	//}
+	//glEnd();
+	glDisableClientState(GL_VERTEX_ARRAY);
+	//glDepthRange(0, 1);
 }
 
 //************************************
@@ -157,32 +178,34 @@ void Renderer::MyGlMultMatrix(const float *a, const float *b, float *out) {
 // Parameter: int numDrawSurfaces
 // Description: The entry point for the rendering of surfaces
 //************************************
-void Renderer::RenderDrawSurfaceList(drawSurf_t *surfaceType, int numDrawSurfaces) {
+void Renderer::RenderDrawSurfaceList(drawSurf_t *drawSurfs, int numDrawSurfaces) {
 	// local variables
 	int i;
+	drawSurf_t *drawSurf;
 
 	// Perform any actions required before drawing the view (set model view, etc.)
 	BeginDrawingView();
 
 	// Draw loop
-	for (i = 0; i < numDrawSurfaces; i++) {
+	for (i = 0, drawSurf = drawSurfs; i < numDrawSurfaces; i++, drawSurf++) {
 		// Perform any actions necessary before drawing the surface
 		// BeginSurface();
+		//currentEntity = &refdef->entities[0];
 
 		// Set up the model view matrix, if necessary
 		//RotateForEntity(currentEntity, &viewParms, &orientation);
-		glLoadMatrixf(orientation.modelMatrix);
+		glLoadMatrixf(viewParms.world.modelMatrix);
 
 		// Add the triangles to an index array
-		SurfacePolychain(refdef->polys);
+		SurfacePolychain(reinterpret_cast<poly_t*>(drawSurf->surface));
 	}
 
 	// Draw the surface
 	// EndSurface();
-	DrawTris();
+	DrawTris(&input);
 
 	// Reset the model view matrix
-	glLoadMatrixf(viewParms.world.modelMatrix);
+	//glLoadMatrixf(viewParms.world.modelMatrix);
 }
 
 //************************************
@@ -293,7 +316,7 @@ void Renderer::RotateForViewer() {
 
 	// convert from our coordinate system (looking down X)
 	// to OpenGL's coordinate system (looking down -Z)
-	MyGlMultMatrix(viewerMatrix, s_flipMatrix, orientation.modelMatrix);
+	MyGlMultMatrix(viewerMatrix, s_identityMatrix, orientation.modelMatrix);
 
 	viewParms.world = orientation;
 }
@@ -311,26 +334,46 @@ void Renderer::SetupProjectionMatrix() {
 	// the rendering class. For example, the view parameters are different for
 	// each scene.
 
-	float ViewDistance = 1 / tan(45.0f * 3.14f / 180.0f);
+	//float ViewDistance = 1 / tan(refdef->camera->fov_x * M_PI / 360.0f);
 
-	viewParms.projectionMatrix[0] = 1;
+	float	xmin, xmax, ymin, ymax;
+	float	width, height, depth;
+	float	zNear, zFar;
+
+	//
+	// set up projection matrix
+	//
+	zNear = 1;
+	zFar = 2048;
+
+	ymax = zNear * tan(refdef->camera->fov_y * M_PI / 360.0f);
+	ymin = -ymax;
+
+	xmax = zNear * tan(refdef->camera->fov_x * M_PI / 360.0f);
+	xmin = -xmax;
+
+	width = xmax - xmin;
+	height = ymax - ymin;
+	depth = zFar - zNear;
+
+	viewParms.projectionMatrix[0] = 2 * zNear / width;
 	viewParms.projectionMatrix[4] = 0;
-	viewParms.projectionMatrix[8] = 0;	// normally 0
+	viewParms.projectionMatrix[8] = (xmax + xmin) / width;	// normally 0
 	viewParms.projectionMatrix[12] = 0;
 
 	viewParms.projectionMatrix[1] = 0;
-	viewParms.projectionMatrix[5] = 1;
-	viewParms.projectionMatrix[9] = 0;	// normally 0
+	viewParms.projectionMatrix[5] = 2 * zNear / height;
+	viewParms.projectionMatrix[9] = (ymax + ymin) / height;	// normally 0
 	viewParms.projectionMatrix[13] = 0;
 
 	viewParms.projectionMatrix[2] = 0;
 	viewParms.projectionMatrix[6] = 0;
-	viewParms.projectionMatrix[10] = 1;
-	viewParms.projectionMatrix[14] = 1 / ViewDistance;
+	viewParms.projectionMatrix[10] = -(zFar + zNear) / depth;
+	viewParms.projectionMatrix[14] = -2 * zFar * zNear / depth;
 
 	viewParms.projectionMatrix[3] = 0;
 	viewParms.projectionMatrix[7] = 0;
-	viewParms.projectionMatrix[11] = 0;
+	viewParms.projectionMatrix[11] = -1;
 	viewParms.projectionMatrix[15] = 0;
 
 }
