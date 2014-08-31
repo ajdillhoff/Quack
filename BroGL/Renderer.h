@@ -20,6 +20,7 @@ public:
 	RefDef *refdef;
 
 	//drawSurf_t drawSurfs[MAX_DRAWSURFS];
+	int currentEntityNum;
 	Entity entities[MAX_ENTITIES];
 
 	drawSurf_t drawSurfs[MAX_DRAWSURFS];
@@ -41,6 +42,16 @@ public:
 	// Parameter: surfaceType_t * s
 	//************************************
 	void AddDrawSurface(surfaceType_t *s);
+
+	//************************************
+	// Method:    AddEntitySurfaces
+	// FullName:  Renderer::AddEntitySurfaces
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: void
+	//************************************
+	void AddEntitySurfaces(void);
 
 	//************************************
 	// Method:    BeginDrawingView
@@ -152,5 +163,15 @@ public:
 	// Parameter: poly * p
 	//************************************
 	void SurfacePolychain(poly_t *p);
+
+	//************************************
+	// Method:    SurfaceTriangles
+	// FullName:  Renderer::SurfaceTriangles
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: triangles_t * srf
+	//************************************
+	void SurfaceTriangles(triangles_t *srf);
 };
 

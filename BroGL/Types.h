@@ -9,10 +9,12 @@
 #define MAX_POLYVERTS 5000
 #define MAX_DRAWSURFS 0x1000
 
+typedef byte color4ub_t[4];
+
 typedef struct {
 	vec3 xyz;
 	vec3 normal;
-	byte color[4];
+	color4ub_t color;
 } vert;
 
 typedef struct {
@@ -34,6 +36,7 @@ typedef struct {
 typedef struct {
 	glIndex_t indexes[SHADER_MAX_INDICES];
 	vec4 xyz[SHADER_MAX_VERTICES];
+	color4ub_t vertexColors[SHADER_MAX_VERTICES];
 	
 	int numIndices;
 	int numVertices;
@@ -55,3 +58,13 @@ typedef struct poly_s {
 	int numVerts;
 	vert *verts;
 } poly_t;
+
+typedef struct {
+	surfaceType_t surfaceType;
+
+	int numIndices;
+	int *indices;
+
+	int numVerts;
+	vert *verts;
+} triangles_t;

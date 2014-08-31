@@ -42,6 +42,26 @@ void Renderer::AddDrawSurface(surfaceType_t *s) {
 }
 
 //************************************
+// Method:    AddEntitySurfaces
+// FullName:  Renderer::AddEntitySurfaces
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: void
+//************************************
+void Renderer::AddEntitySurfaces(void) {
+	Entity *ent;
+
+	for (	currentEntityNum = 0; 
+				currentEntityNum < refdef->numEntities; 
+				currentEntityNum++ ) {
+		ent = currentEntity = &refdef->entities[currentEntityNum];
+
+		refdef->AddDrawSurf(reinterpret_cast<surfaceType_t *>(ent->model));
+	}
+}
+
+//************************************
 // Method:    BeginDrawingView
 // FullName:  Renderer::BeginDrawingView
 // Access:    public 
@@ -80,83 +100,29 @@ void Renderer::DrawSurfaces() {
 // Access:    public 
 // Returns:   void
 // Qualifier:
+// Description: Currently this is the catch all for rendering
 //************************************
 void Renderer::DrawTris(shaderCommands_t *input) {
+
+	/* DEBUGGING OPTIONS */
 	//glDisable(GL_CULL_FACE);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-
 	//glDisable(GL_LIGHTING);
 	//glDisable(GL_TEXTURE_2D);
-	//glColor4f(1, 1, 1, 1);
+	//glColor4f(1, 0, 0, 1);
+	/* DEBUGGING OPTIONS */
 
-	//GLuint VertexVBOID = 0, IndexVBOID = 0;
+	// Add colors
+	glEnableClientState(GL_COLOR_ARRAY);
+	glColorPointer(4, GL_UNSIGNED_BYTE, 0, input->vertexColors);
 
-	//// VBO buffer init
-	//glGenBuffers(1, &VertexVBOID);
-	//glBindBuffer(GL_ARRAY_BUFFER, VertexVBOID);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vec4), &input->xyz[0], GL_STATIC_DRAW);
+	// add vertices of polygon
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, sizeof(vec4), input->xyz);
 
-	////glGenBuffers(1, &IndexVBOID);
-	////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
-	////glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int), input->indexes, GL_STATIC_DRAW);
-
-	//glEnableVertexAttribArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, VertexVBOID);
-	//glVertexAttribPointer(
-	//	0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	//	3,                  // size
-	//	GL_FLOAT,           // type
-	//	GL_FALSE,           // normalized?
-	//	16,                  // stride
-	//	(void*)0            // array buffer offset
-	//	);
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glVertexPointer(3, GL_FLOAT, 16, BUFFER_OFFSET(0));
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
-
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glVertexPointer(3, GL_FLOAT, 16, input->xyz);
-	//glDrawElements(GL_POLYGON, input->numIndices, GL_UNSIGNED_INT, input->indexes);
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	//glDisableVertexAttribArray(0);
-
-	//glBegin(GL_POLYGON);
-	//for (int i = 0; i < input->numVertices; i++) {
-	//	glVertex3fv(*input->xyz + i * 3);
-	//}
-	//glEnd();
-	//glDisableClientState(GL_VERTEX_ARRAY);
-
-	// This will identify our vertex buffer
-	GLuint vertexbuffer;
-
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-	glGenBuffers(1, &vertexbuffer);
-
-	// The following commands will talk about our 'vertexbuffer' buffer
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vec4) * input->numVertices, input->xyz, GL_STATIC_DRAW);
-
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		sizeof(vec4),       // stride
-		(void*)0            // array buffer offset
-		);
-
-	// Draw the triangle !
-	//glDrawArrays(GL_POLYGON, 0, input->numVertices); // Starting from vertex 0; 3 vertices total -> 1 triangle
-	glDrawElements(GL_POLYGON, input->numIndices, GL_UNSIGNED_INT, input->indexes);
-
-	glDisableVertexAttribArray(0);
+	// finally, draw
+	glDrawElements(GL_TRIANGLES, input->numIndices, GL_UNSIGNED_INT, input->indexes);
 }
 
 //************************************
@@ -181,6 +147,8 @@ void Renderer::GenerateDrawSurfaces() {
 
 	// Setup the projection matrix
 	SetupProjectionMatrix();
+
+	AddEntitySurfaces();
 }
 
 //************************************
@@ -219,7 +187,7 @@ void Renderer::MyGlMultMatrix(const float *a, const float *b, float *out) {
 //************************************
 void Renderer::RenderDrawSurfaceList(drawSurf_t *drawSurfs, int numDrawSurfaces) {
 	// local variables
-	int i;
+	int i, entityNum = 0;
 	drawSurf_t *drawSurf;
 
 	// Perform any actions required before drawing the view (set model view, etc.)
@@ -229,17 +197,17 @@ void Renderer::RenderDrawSurfaceList(drawSurf_t *drawSurfs, int numDrawSurfaces)
 	for (i = 0, drawSurf = drawSurfs; i < numDrawSurfaces; i++, drawSurf++) {
 		// Perform any actions necessary before drawing the surface
 		// BeginSurface();
-		//currentEntity = &refdef->entities[0];
+
+		// If entities contain multiple surfaces, some sort of sorting needs to be
+		// applied first to make sure we are still referencing the same one.
+		//currentEntity = &refdef->entities[entityNum++];
 
 		// Set up the model view matrix, if necessary
 		//RotateForEntity(currentEntity, &viewParms, &orientation);
 		glLoadMatrixf(viewParms.world.modelMatrix);
 
-		GLfloat m[16];
-		glGetFloatv(GL_MODELVIEW, m);
-
-		// Add the triangles to an index array
-		SurfacePolychain(reinterpret_cast<poly_t*>(drawSurf->surface));
+		// Add the triangles to an index array - for now these represent our model.
+		SurfaceTriangles(reinterpret_cast<triangles_t*>(drawSurf->surface));
 	}
 
 	// Draw the surface
@@ -434,7 +402,7 @@ void Renderer::SurfacePolychain(poly_t *p) {
 	for (i = 0; i < p->numVerts; i++) {
 		// Copy poly vertices locations to input
 		VectorCopy(p->verts[i].xyz, input.xyz[numVertices]);
-
+		*(int *)&input.vertexColors[numVertices] = *(int *)p->verts[i].color;
 		numVertices++;
 	}
 
@@ -447,4 +415,40 @@ void Renderer::SurfacePolychain(poly_t *p) {
 	}
 
 	input.numVertices = numVertices;
+}
+
+//************************************
+// Method:    SurfaceTriangles
+// FullName:  Renderer::SurfaceTriangles
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: triangles_t * srf
+//************************************
+void Renderer::SurfaceTriangles(triangles_t *srf) {
+	int			i;
+	vert  	*dv;
+	float		*xyz;
+	byte		*color;
+
+	for (i = 0; i < srf->numIndices; i += 3) {
+		input.indexes[input.numIndices + i + 0] = input.numVertices + srf->indices[i + 0];
+		input.indexes[input.numIndices + i + 1] = input.numVertices + srf->indices[i + 1];
+		input.indexes[input.numIndices + i + 2] = input.numVertices + srf->indices[i + 2];
+	}
+	input.numIndices += srf->numIndices;
+
+	dv = srf->verts;
+	xyz = input.xyz[input.numVertices];
+	color = input.vertexColors[input.numVertices];
+
+	for (i = 0; i < srf->numVerts; i++, dv++, xyz += 4, color += 4) {
+		xyz[0] = dv->xyz[0];
+		xyz[1] = dv->xyz[1];
+		xyz[2] = dv->xyz[2];
+
+		*(int *)color = *(int *)dv->color;
+	}
+
+	input.numVertices += srf->numVerts;
 }

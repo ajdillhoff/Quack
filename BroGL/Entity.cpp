@@ -2,11 +2,12 @@
 
 
 Entity::Entity() {
+	model = new triangles_t;
 }
 
 
 Entity::~Entity() {
-	delete[] polys;
+	delete model;
 }
 
 void Entity::GenerateTestEntity() {
@@ -15,54 +16,65 @@ void Entity::GenerateTestEntity() {
 	v1.xyz[0] = 0.0;
 	v1.xyz[1] = 0.0;
 	v1.xyz[2] = 0.0;
-	
+	v1.color[0] = 255;
+	v1.color[1] = 255;
+	v1.color[2] = 255;
+	v1.color[3] = 255;
+
 	v2.xyz[0] = 0.5;
-	v2.xyz[1] = 1.0;
+	v2.xyz[1] = -1.0;
 	v2.xyz[2] = 0.5;
-	
+	v2.color[0] = 255;
+	v2.color[1] = 0;
+	v2.color[2] = 255;
+	v2.color[3] = 255;
+
 	v3.xyz[0] = 1.0;
 	v3.xyz[1] = 0.0;
 	v3.xyz[2] = 0.0;
-	
+	v3.color[0] = 255;
+	v3.color[1] = 0;
+	v3.color[2] = 0;
+	v3.color[3] = 255;
+
 	v4.xyz[0] = 1.0;
 	v4.xyz[1] = 0.0;
 	v4.xyz[2] = 1.0;
-	
+	v4.color[0] = 0;
+	v4.color[1] = 0;
+	v4.color[2] = 255;
+	v4.color[3] = 255;
+
 	v5.xyz[0] = 0.0;
 	v5.xyz[1] = 0.0;
 	v5.xyz[2] = 1.0;
+	v5.color[0] = 255;
+	v5.color[1] = 255;
+	v5.color[2] = 255;
+	v5.color[3] = 255;
 
-	poly_t p1, p2, p3, p4;
+	model->numVerts = 5;
+	model->verts = new vert[model->numVerts];
+	model->verts[0] = v1;
+	model->verts[1] = v2;
+	model->verts[2] = v3;
+	model->verts[3] = v4;
+	model->verts[4] = v5;
 
-	p1.numVerts = 3;
-	p1.verts = new vert[p1.numVerts];
-	p1.verts[0] = v1;
-	p1.verts[1] = v2;
-	p1.verts[2] = v3;
-
-	p2.numVerts = 3;
-	p2.verts = new vert[p2.numVerts];
-	p2.verts[0] = v3;
-	p2.verts[1] = v2;
-	p2.verts[2] = v4;
-
-	p3.numVerts = 3;
-	p3.verts = new vert[p3.numVerts];
-	p3.verts[0] = v4;
-	p3.verts[1] = v2;
-	p3.verts[2] = v5;
-
-	p4.numVerts = 3;
-	p4.verts = new vert[p4.numVerts];
-	p4.verts[0] = v5;
-	p4.verts[1] = v2;
-	p4.verts[2] = v1;
-
-	polys = new poly_t[4];
-	polys[0] = p1;
-	polys[1] = p2;
-	polys[2] = p3;
-	polys[3] = p4;
+	model->numIndices = 12;
+	model->indices = new int[model->numIndices];
+	model->indices[0] = 0;
+	model->indices[1] = 1;
+	model->indices[2] = 2;
+	model->indices[3] = 2;
+	model->indices[4] = 1;
+	model->indices[5] = 3;
+	model->indices[6] = 3;
+	model->indices[7] = 1;
+	model->indices[8] = 4;
+	model->indices[9] = 4;
+	model->indices[10] = 1;
+	model->indices[11] = 0;
 
 	// Set world info
 	origin[0] = 0.0;

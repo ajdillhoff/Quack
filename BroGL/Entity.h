@@ -11,6 +11,7 @@ public:
 
 	vec3 direction[3];
 	vec3 origin;
-	poly_t *polys;
+
+	triangles_t *model;   // our entity's model will be defined as basic geometry
 };
 
