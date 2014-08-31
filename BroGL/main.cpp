@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
 //#include <GL/freeglut.h>
 
 #include "Scene.h"
@@ -11,7 +12,9 @@
 int CurrentWidth = 800,
 CurrentHeight = 600,
 WindowHandle = 0;
+HGLRC m_hrc;
 Camera *camera = new Camera();
+vec3 angles = { 0, 0, 0 };
 
 void Initialize(int, char*[]);
 void InitWindow(int, char*[]);
@@ -42,8 +45,8 @@ void Initialize(int argc, char* argv[]) {
 void InitWindow(int argc, char* argv[]) {
 	glutInit(&argc, argv);
 
-	glutInitContextVersion(4, 0);
-	glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
+	glutInitContextVersion(3, 1);
+	glutInitContextFlags(GLUT_DEBUG);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 
 	glutSetOption(
@@ -65,36 +68,49 @@ void InitWindow(int argc, char* argv[]) {
 		exit(EXIT_FAILURE);
 	}
 
+	// Init glew, too!
+	glewInit();
+	//bool result = CreateMyGLContext(WindowHandle);
+
 	glutReshapeFunc(ResizeFunction);
 	glutDisplayFunc(RenderFunction);
 	glutKeyboardFunc(Keyboard);
-
-	glutMainLoop();
 }
 
 void Keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
 		// Translate positive z axis
-		camera->viewOrigin[2] += 0.5;
+		camera->viewOrigin[2] -= 0.3;
+		std::cout << "DEBUG: w pressed\n";
 		break;
 	case 'a':
 		// Turn left
+		angles[0] += 0.5;
+		AngleVectors(angles, camera->viewMatrix[0], camera->viewMatrix[1], camera->viewMatrix[2]);
 		break;
 	case 's':
 		// Translate negative z axis
-		camera->viewOrigin[2] -= 0.5;
+		camera->viewOrigin[2] += 0.3;
 		break;
 	case 'd':
 		// Turn right
+		angles[0] -= 0.5;
+		AngleVectors(angles, camera->viewMatrix[0], camera->viewMatrix[1], camera->viewMatrix[2]);
 		break;
 	case 'r':
 		// Translate positive y axis
-		camera->viewOrigin[1] += 0.5;
+		camera->viewOrigin[1] -= 0.3;
 		break;
 	case 'f':
 		// Translate negative y axis
-		camera->viewOrigin[1] -= 0.5;
+		camera->viewOrigin[1] += 0.3;
+		break;
+	case 'q':
+		camera->viewOrigin[0] -= 0.3;
+		break;
+	case 'e':
+		camera->viewOrigin[0] += 0.3;
 		break;
 	default:
 		break;

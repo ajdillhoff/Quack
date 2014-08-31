@@ -52,17 +52,6 @@ public:
 	void BeginDrawingView();
 
 	//************************************
-	// Method:    DrawPolygon
-	// FullName:  Renderer::DrawPolygon
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: GLfloat
-	// Description: Draws a polygon using OpenGL.
-	//************************************
-	void DrawPolygon(GLfloat);
-
-	//************************************
 	// Method:    DrawSurfaces
 	// FullName:  Renderer::DrawSurfaces
 	// Access:    public 

@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-static float	s_flipMatrix[16] = {
+static GLfloat	s_flipMatrix[16] = {
 	// convert from our coordinate system (looking down X)
 	// to OpenGL's coordinate system (looking down -Z)
 	0, 0, -1, 0,
@@ -60,27 +60,6 @@ void Renderer::BeginDrawingView() {
 }
 
 //************************************
-// Method:    DrawPolygon
-// FullName:  Renderer::DrawPolygon
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: GLfloat
-// Description: Draws a polygon using OpenGL.
-// TODO: Determine if this method is even going to be used.
-//************************************
-void Renderer::DrawPolygon(GLfloat glVertexBuffer) {
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//glBindVertexArray(glVertexBuffer);
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-
-	//glBindVertexArray(0);
-
-	//SwapBuffers(pDC->m_hDC); // TODO: Send the context here
-}
-
-//************************************
 // Method:    DrawSurfaces
 // FullName:  Renderer::DrawSurfaces
 // Access:    public 
@@ -103,21 +82,81 @@ void Renderer::DrawSurfaces() {
 // Qualifier:
 //************************************
 void Renderer::DrawTris(shaderCommands_t *input) {
-	glColor3f(1, 0, 0);
+	//glDisable(GL_CULL_FACE);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glDepthRange(0, 0);
-	//glDisableClientState(GL_COLOR_ARRAY);
-	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 16, input->xyz);
-	glDrawElements(GL_TRIANGLES, input->numIndices, GL_UNSIGNED_INT, input->indexes);
+
+
+	//glDisable(GL_LIGHTING);
+	//glDisable(GL_TEXTURE_2D);
+	//glColor4f(1, 1, 1, 1);
+
+	//GLuint VertexVBOID = 0, IndexVBOID = 0;
+
+	//// VBO buffer init
+	//glGenBuffers(1, &VertexVBOID);
+	//glBindBuffer(GL_ARRAY_BUFFER, VertexVBOID);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vec4), &input->xyz[0], GL_STATIC_DRAW);
+
+	////glGenBuffers(1, &IndexVBOID);
+	////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
+	////glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int), input->indexes, GL_STATIC_DRAW);
+
+	//glEnableVertexAttribArray(0);
+	//glBindBuffer(GL_ARRAY_BUFFER, VertexVBOID);
+	//glVertexAttribPointer(
+	//	0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+	//	3,                  // size
+	//	GL_FLOAT,           // type
+	//	GL_FALSE,           // normalized?
+	//	16,                  // stride
+	//	(void*)0            // array buffer offset
+	//	);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 16, BUFFER_OFFSET(0));
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
+
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 16, input->xyz);
+	//glDrawElements(GL_POLYGON, input->numIndices, GL_UNSIGNED_INT, input->indexes);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	//glDisableVertexAttribArray(0);
+
 	//glBegin(GL_POLYGON);
 	//for (int i = 0; i < input->numVertices; i++) {
 	//	glVertex3fv(*input->xyz + i * 3);
 	//}
 	//glEnd();
-	glDisableClientState(GL_VERTEX_ARRAY);
-	//glDepthRange(0, 1);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+
+	// This will identify our vertex buffer
+	GLuint vertexbuffer;
+
+	// Generate 1 buffer, put the resulting identifier in vertexbuffer
+	glGenBuffers(1, &vertexbuffer);
+
+	// The following commands will talk about our 'vertexbuffer' buffer
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+
+	// Give our vertices to OpenGL.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec4) * input->numVertices, input->xyz, GL_STATIC_DRAW);
+
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glVertexAttribPointer(
+		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		sizeof(vec4),       // stride
+		(void*)0            // array buffer offset
+		);
+
+	// Draw the triangle !
+	//glDrawArrays(GL_POLYGON, 0, input->numVertices); // Starting from vertex 0; 3 vertices total -> 1 triangle
+	glDrawElements(GL_POLYGON, input->numIndices, GL_UNSIGNED_INT, input->indexes);
+
+	glDisableVertexAttribArray(0);
 }
 
 //************************************
@@ -195,6 +234,9 @@ void Renderer::RenderDrawSurfaceList(drawSurf_t *drawSurfs, int numDrawSurfaces)
 		// Set up the model view matrix, if necessary
 		//RotateForEntity(currentEntity, &viewParms, &orientation);
 		glLoadMatrixf(viewParms.world.modelMatrix);
+
+		GLfloat m[16];
+		glGetFloatv(GL_MODELVIEW, m);
 
 		// Add the triangles to an index array
 		SurfacePolychain(reinterpret_cast<poly_t*>(drawSurf->surface));
@@ -314,8 +356,7 @@ void Renderer::RotateForViewer() {
 	viewerMatrix[11] = 0;
 	viewerMatrix[15] = 1;
 
-	// convert from our coordinate system (looking down X)
-	// to OpenGL's coordinate system (looking down -Z)
+	// TODO: Just copy if we end up sticking with the identity matrix
 	MyGlMultMatrix(viewerMatrix, s_identityMatrix, orientation.modelMatrix);
 
 	viewParms.world = orientation;
