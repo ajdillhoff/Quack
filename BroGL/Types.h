@@ -9,12 +9,12 @@
 #define MAX_POLYVERTS 5000
 #define MAX_DRAWSURFS 0x1000
 
-typedef byte color4ub_t[4];
+typedef float color4f_t[4];
 
 typedef struct {
 	vec3 xyz;
 	vec3 normal;
-	color4ub_t color;
+	color4f_t color;
 } vert;
 
 typedef struct {
@@ -34,9 +34,9 @@ typedef struct {
 
 // TODO: Using this temporarily to try and make sense of the Q3 renderer
 typedef struct {
-	glIndex_t indexes[SHADER_MAX_INDICES];
 	vec4 xyz[SHADER_MAX_VERTICES];
-	color4ub_t vertexColors[SHADER_MAX_VERTICES];
+	color4f_t vertexColors[SHADER_MAX_VERTICES];
+	glIndex_t indexes[SHADER_MAX_INDICES];
 	
 	int numIndices;
 	int numVertices;

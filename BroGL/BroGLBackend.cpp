@@ -13,6 +13,8 @@ BroGLBackend::BroGLBackend(BroGLWin* newWindow) {
 
 	polys = new poly_t[MAX_POLYS];
 	polyVerts = new vert[MAX_POLYVERTS];
+
+	CreateShaders();
 }
 
 BroGLBackend::~BroGLBackend() {
@@ -38,6 +40,61 @@ void BroGLBackend::BeginDrawingView() {
 }
 
 //************************************
+// Method:    CreateShaders
+// FullName:  BroGLBackend::CreateShaders
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Description: Used to load and compile shaders
+// TODO: If shader operations become too big, consider moving all shader funcs
+// to their own class.
+//************************************
+void BroGLBackend::CreateShaders() {
+	const GLchar* VertexShader =
+	{
+		"#version 400\n"\
+
+		"layout(location=0) in vec4 in_Position;\n"\
+		"layout(location=1) in vec4 in_Color;\n"\
+		"out vec4 ex_Color;\n"\
+
+		"void main(void)\n"\
+		"{\n"\
+		"  gl_Position = in_Position;\n"\
+		"  ex_Color = in_Color;\n"\
+		"}\n"
+	};
+
+	const GLchar* FragmentShader =
+	{
+		"#version 400\n"\
+
+		"in vec4 ex_Color;\n"\
+		"out vec4 out_Color;\n"\
+
+		"void main(void)\n"\
+		"{\n"\
+		"  out_Color = ex_Color;\n"\
+		"}\n"
+	};
+
+	glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(VertexShaderId, 1, &VertexShader, NULL);
+	glCompileShader(VertexShaderId);
+
+	FragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(FragmentShaderId, 1, &FragmentShader, NULL);
+	glCompileShader(FragmentShaderId);
+
+	ProgramId = glCreateProgram();
+	glAttachShader(ProgramId, VertexShaderId);
+	glAttachShader(ProgramId, FragmentShaderId);
+
+	glLinkProgram(ProgramId);
+	glUseProgram(ProgramId);
+}
+
+//************************************
 // Method:    DrawSurfaces
 // FullName:  BroGLBackend::DrawSurfaces
 // Access:    public 
@@ -45,7 +102,10 @@ void BroGLBackend::BeginDrawingView() {
 // Qualifier:
 // Description: Iterates through all objects and draws them.
 //************************************
-void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs, int numDrawSurfs, RefDef *rd, viewParms_t vp) {
+void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs, 
+	int numDrawSurfs, 
+	RefDef *rd, 
+	viewParms_t vp) {
 	// All of our data should be loaded in during this call.
 	refdef = rd;
 	viewParms = vp;
@@ -68,17 +128,40 @@ void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs, int numDrawSurfs, RefDef 
 // Description: Currently this is the catch all for rendering
 //************************************
 void BroGLBackend::DrawTris(shaderCommands_t *input) {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Add colors
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, input->vertexColors);
+	/* OpenGL 3+ stuff */
+	// Set up the buffer arrays
+	glGenVertexArrays(1, &VaoId);
+	glBindVertexArray(VaoId);
 
-	// add vertices of polygon
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(vec4), input->xyz);
+	glGenBuffers(1, &VboId);
+	glBindBuffer(GL_ARRAY_BUFFER, VboId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec4) * input->numVertices, input->xyz, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
 
-	// finally, draw
-	glDrawElements(GL_TRIANGLES, input->numIndices, GL_UNSIGNED_INT, input->indexes);
+	glGenBuffers(1, &ColorBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, ColorBufferId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color4f_t) * input->numVertices, input->vertexColors, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(1);
+
+	glDrawArrays(GL_TRIANGLES, 0, input->numVertices);
+
+	//// Add colors
+	//glEnableClientState(GL_COLOR_ARRAY);
+	//glColorPointer(4, GL_UNSIGNED_BYTE, 0, input->vertexColors);
+
+	//// add vertices of polygon
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, sizeof(vec4), input->xyz);
+
+	//// finally, draw
+	//glDrawElements(GL_TRIANGLES, 
+	//	input->numIndices, 
+	//	GL_UNSIGNED_INT, 
+	//	input->indexes);
 }
 
 //************************************
@@ -91,12 +174,13 @@ void BroGLBackend::DrawTris(shaderCommands_t *input) {
 // Parameter: int numDrawSurfaces
 // Description: The entry point for the rendering of surfaces
 //************************************
-void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs, int numDrawSurfaces) {
+void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs, 
+	int numDrawSurfaces) {
 	// local variables
 	int i, entityNum = 0;
 	drawSurf_t *drawSurf;
 
-	// Perform any actions required before drawing the view (set model view, etc.)
+	// Perform actions required before drawing the view (set model view, etc.)
 	BeginDrawingView();
 
 	// Draw loop
@@ -149,6 +233,7 @@ void BroGLBackend::SurfacePolychain(poly_t *p) {
 	}
 
 	// Generate indexes into the input array
+	// TODO - Since we are generating buffers, this may not be necessary
 	for (i = 0; i < p->numVerts - 2; i++) {
 		input.indexes[input.numIndices + 0] = input.numVertices;
 		input.indexes[input.numIndices + 1] = input.numVertices + i + 1;
@@ -171,7 +256,7 @@ void BroGLBackend::SurfaceTriangles(triangles_t *srf) {
 	int			i;
 	vert  	*dv;
 	float		*xyz;
-	byte		*color;
+	float		*color;
 
 	for (i = 0; i < srf->numIndices; i += 3) {
 		input.indexes[input.numIndices + i + 0] = input.numVertices + srf->indices[i + 0];
@@ -189,7 +274,11 @@ void BroGLBackend::SurfaceTriangles(triangles_t *srf) {
 		xyz[1] = dv->xyz[1];
 		xyz[2] = dv->xyz[2];
 
-		*(int *)color = *(int *)dv->color;
+		color[0] = dv->color[0];
+		color[1] = dv->color[1];
+		color[2] = dv->color[2];
+		color[3] = dv->color[3];
+		//*(color4f_t *)color = *(color4f_t *)dv->color;
 	}
 
 	input.numVertices += srf->numVerts;

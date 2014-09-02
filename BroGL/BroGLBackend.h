@@ -36,6 +36,18 @@ public:
 	void BeginDrawingView();
 
 	//************************************
+	// Method:    CreateShaders
+	// FullName:  BroGLBackend::CreateShaders
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Description: Used to load and compile shaders
+	// TODO: If shader operations become too big, consider moving all shader funcs
+	// to their own class.
+	//************************************
+	void CreateShaders();
+
+	//************************************
 	// Method:    DrawSurfaces
 	// FullName:  DrawSurfaces
 	// Access:    public 
@@ -84,5 +96,13 @@ public:
 	//************************************
 	void SurfaceTriangles(triangles_t *srf);
 
+private:
+	// For Drawing
+	GLuint VertexShaderId,
+		FragmentShaderId,
+		ProgramId,
+		VaoId,
+		VboId,
+		ColorBufferId;
 };
 

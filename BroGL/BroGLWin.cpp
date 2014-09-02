@@ -152,6 +152,7 @@ void BroGLWin::Init(void) {
 	StartOpenGL();
 
 	// other init functions
+	glewInit();
 }
 
 //************************************

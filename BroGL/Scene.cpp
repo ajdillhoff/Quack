@@ -40,24 +40,24 @@ void Scene::AddEntityToScene(Entity *entity) {
 //************************************
 void Scene::AddPolygonToScene(int numVerts, vert *verts, int numPolygons) {
 	// For each poly, add the verts to the global vert list
-	//poly_t *poly;
-	//int j;
+	poly_t *poly;
+	int j;
 
-	//for (j = 0; j < numPolygons; j++) {
-	//	if (re->numPolyVerts + numVerts > MAX_POLYVERTS || re->numPolys >= MAX_POLYS) {
-	//		// Cannot add these
-	//		return;
-	//	}
-	//	poly = &re->polys[re->numPolys];
-	//	poly->surfaceType = SF_POLY;
-	//	poly->numVerts = numVerts;
-	//	poly->verts = &re->polyVerts[re->numPolyVerts];
+	for (j = 0; j < numPolygons; j++) {
+		if (re->numPolyVerts + numVerts > MAX_POLYVERTS || re->numPolys >= MAX_POLYS) {
+			// Cannot add these
+			return;
+		}
+		poly = &re->backend->polys[re->numPolys];
+		poly->surfaceType = SF_POLY;
+		poly->numVerts = numVerts;
+		poly->verts = &re->backend->polyVerts[re->numPolyVerts];
 
-	//	memcpy(poly->verts, &verts[numVerts*j], numVerts * sizeof(*verts));
+		memcpy(poly->verts, &verts[numVerts*j], numVerts * sizeof(*verts));
 
-	//	re->numPolys++;
-	//	re->numPolyVerts += numVerts;
-	//}
+		re->numPolys++;
+		re->numPolyVerts += numVerts;
+	}
 }
 
 //************************************
