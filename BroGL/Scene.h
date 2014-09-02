@@ -7,7 +7,15 @@ class Scene {
 public:
 	Renderer *re;
 
+	int firstSceneDrawSurf;
+
 	int numEntities;
+	int firstSceneEntity;
+
+	int numPolys;
+	int firstScenePoly;
+
+	int numPolyVerts;
 
 	Scene();
 	Scene(Renderer *);
@@ -45,6 +53,15 @@ public:
 	void AddPolygonSurfaces();
 
 	//************************************
+	// Method:    ClearScene
+	// FullName:  Scene::ClearScene
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	//************************************
+	void ClearScene();
+
+	//************************************
 	// Method:    RenderScene
 	// FullName:  Scene::RenderScene
 	// Access:    public 
@@ -52,5 +69,13 @@ public:
 	// Qualifier:
 	//************************************
 	void RenderScene(RefDef *rd);
-};
 
+	//************************************
+	// Method:    ToggleNewFrame
+	// FullName:  Scene::ToggleNewFrame
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	//************************************
+	void ToggleNewFrame();
+};

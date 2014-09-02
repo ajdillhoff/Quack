@@ -1,10 +1,5 @@
-#include <GL/glew.h>
-#include <GL/glut.h>
 #include <math.h>
-#include "RefDef.h"
-#include "Types.h"
-#include "Entity.h"
-#include <GL/freeglut.h>
+#include "BroGLBackend.h"
 
 #pragma once
 class Renderer {
@@ -14,6 +9,9 @@ public:
 	orientation_t orientation;
 
 	shaderCommands_t input;
+
+	// Temp for debugging
+	BroGLBackend *backend;
 
 	// Object information
 	Entity *currentEntity;
@@ -27,10 +25,9 @@ public:
 
 	int numPolys;
 	int numPolyVerts;
-	poly_t *polys;
-	vert *polyVerts;
 
 	Renderer();
+	Renderer(BroGLBackend *);
 	virtual ~Renderer();
 
 	//************************************
@@ -54,34 +51,6 @@ public:
 	void AddEntitySurfaces(void);
 
 	//************************************
-	// Method:    BeginDrawingView
-	// FullName:  Renderer::BeginDrawingView
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	//************************************
-	void BeginDrawingView();
-
-	//************************************
-	// Method:    DrawSurfaces
-	// FullName:  Renderer::DrawSurfaces
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Description: Iterates through all surfaces and draws them.
-	//************************************
-	void DrawSurfaces();
-
-	//************************************
-	// Method:    DrawTris
-	// FullName:  Renderer::DrawTris
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	//************************************
-	void DrawTris(shaderCommands_t*);
-
-	//************************************
 	// Method:    GenerateDrawSurfaces
 	// FullName:  Renderer::GenerateDrawSurfaces
 	// Access:    public 
@@ -102,16 +71,6 @@ public:
 	// Parameter: float * out
 	//************************************
 	void Renderer::MyGlMultMatrix(const float *a, const float *b, float *out);
-
-	//************************************
-	// Method:    RenderDrawSurfaceList
-	// FullName:  Renderer::RenderDrawSurfaceList
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Description: The entry point for the rendering of polys or surfaces
-	//************************************
-	void RenderDrawSurfaceList(drawSurf_t *, int);
 
 	//************************************
 	// Method:    RenderView
@@ -153,25 +112,5 @@ public:
 	// Description: Configures the proper projection matrix.
 	//************************************
 	void SetupProjectionMatrix();
-
-	//************************************
-	// Method:    SurfacePolychain
-	// FullName:  Renderer::SurfacePolychain
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: poly * p
-	//************************************
-	void SurfacePolychain(poly_t *p);
-
-	//************************************
-	// Method:    SurfaceTriangles
-	// FullName:  Renderer::SurfaceTriangles
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: triangles_t * srf
-	//************************************
-	void SurfaceTriangles(triangles_t *srf);
 };
 

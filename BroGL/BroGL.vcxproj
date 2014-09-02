@@ -69,6 +69,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BMath.cpp" />
+    <ClCompile Include="BroGLBackend.cpp" />
+    <ClCompile Include="BroGLWin.cpp" />
     <ClCompile Include="BShared.h" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -78,6 +80,8 @@
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BroGLBackend.h" />
+    <ClInclude Include="BroGLWin.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="RefDef.h" />

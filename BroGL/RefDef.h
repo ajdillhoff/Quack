@@ -8,7 +8,7 @@ public:
 	Camera *camera;
 
 	int numEntities;
-	Entity entities[MAX_ENTITIES];
+	Entity *entities;
 
 	int numPolys;
 	struct poly_s *polys;
