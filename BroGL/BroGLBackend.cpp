@@ -30,9 +30,9 @@ BroGLBackend::~BroGLBackend() {
 //************************************
 void BroGLBackend::BeginDrawingView() {
 	// Set the viewport
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(viewParms.projectionMatrix);
-	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadMatrixf(viewParms.projectionMatrix);
+	//glMatrixMode(GL_MODELVIEW);
 
 	// Set window clipping 
 	glViewport(viewParms.viewPortX, viewParms.viewPortY,
@@ -58,9 +58,12 @@ void BroGLBackend::CreateShaders() {
 		"layout(location=1) in vec4 in_Color;\n"\
 		"out vec4 ex_Color;\n"\
 
+		"uniform mat4 modelViewMatrix;\n"\
+		"uniform mat4 projectionMatrix;\n"\
+
 		"void main(void)\n"\
 		"{\n"\
-		"  gl_Position = in_Position;\n"\
+		"  gl_Position = projectionMatrix * modelViewMatrix * in_Position;\n"\
 		"  ex_Color = in_Color;\n"\
 		"}\n"
 	};
@@ -78,7 +81,10 @@ void BroGLBackend::CreateShaders() {
 		"}\n"
 	};
 
-	glCreateShader(GL_VERTEX_SHADER);
+	int InfoLogLength;
+	GLint Result = GL_FALSE;
+
+	VertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(VertexShaderId, 1, &VertexShader, NULL);
 	glCompileShader(VertexShaderId);
 
@@ -128,40 +134,40 @@ void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs,
 // Description: Currently this is the catch all for rendering
 //************************************
 void BroGLBackend::DrawTris(shaderCommands_t *input) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// So much sloppy in here, apply this transformation somewhere else :))))
+	GLuint modelViewMatrixId = glGetUniformLocation(ProgramId, "modelViewMatrix");
+	glUniformMatrix4fv(modelViewMatrixId, 1, GL_FALSE, viewParms.world.modelMatrix);
+	GLuint projectionMatrixId = glGetUniformLocation(ProgramId, "projectionMatrix");
+	glUniformMatrix4fv(projectionMatrixId, 1, GL_FALSE, viewParms.projectionMatrix);
 
 	/* OpenGL 3+ stuff */
 	// Set up the buffer arrays
 	glGenVertexArrays(1, &VaoId);
 	glBindVertexArray(VaoId);
 
+	// Vertex Buffer
 	glGenBuffers(1, &VboId);
 	glBindBuffer(GL_ARRAY_BUFFER, VboId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vec4) * input->numVertices, input->xyz, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vec4), 0);
 	glEnableVertexAttribArray(0);
 
+	// Color Buffer
 	glGenBuffers(1, &ColorBufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, ColorBufferId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(color4f_t) * input->numVertices, input->vertexColors, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(1);
 
-	glDrawArrays(GL_TRIANGLES, 0, input->numVertices);
+	// Index Buffer
+	glGenBuffers(1, &IndexBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(input->indexes) * input->numIndices, input->indexes, GL_STATIC_DRAW);
 
-	//// Add colors
-	//glEnableClientState(GL_COLOR_ARRAY);
-	//glColorPointer(4, GL_UNSIGNED_BYTE, 0, input->vertexColors);
-
-	//// add vertices of polygon
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glVertexPointer(3, GL_FLOAT, sizeof(vec4), input->xyz);
-
-	//// finally, draw
-	//glDrawElements(GL_TRIANGLES, 
-	//	input->numIndices, 
-	//	GL_UNSIGNED_INT, 
-	//	input->indexes);
+	//glDrawArrays(GL_TRIANGLES, 0, input->numVertices);
+	glDrawElements(GL_TRIANGLES, input->numIndices, GL_UNSIGNED_INT, 0);
 }
 
 //************************************
@@ -194,7 +200,7 @@ void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs,
 
 		// Set up the model view matrix, if necessary
 		//RotateForEntity(currentEntity, &viewParms, &orientation);
-		glLoadMatrixf(viewParms.world.modelMatrix);
+		//glLoadMatrixf(viewParms.world.modelMatrix);
 
 		// Add the triangles to an index array - for now these represent our model.
 		SurfaceTriangles(reinterpret_cast<triangles_t*>(drawSurf->surface));

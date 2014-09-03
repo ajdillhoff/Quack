@@ -103,6 +103,7 @@ private:
 		ProgramId,
 		VaoId,
 		VboId,
-		ColorBufferId;
+		ColorBufferId,
+		IndexBufferId;
 };
 
