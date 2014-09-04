@@ -1,12 +1,6 @@
 #include "Scene.h"
 #include "BroGLBackend.h"
 
-//int main(int argc, char **argv) {
-//	//BroGLWin *bgl = new BroGLWin();
-//
-//	return 0;
-//}
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	// Init the window and context
 	BroGLWin *bgl = new BroGLWin(hInstance);
@@ -30,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (1) {
 		sc->ToggleNewFrame();
 
-		ent->direction = glm::rotate(ent->direction, float(0.001), glm::vec3(1, 0, 0));
+		ent->direction = glm::rotate(ent->direction, float(0.001), glm::vec3(0, 1, 1));
 
 		sc->AddEntityToScene(ent);
 

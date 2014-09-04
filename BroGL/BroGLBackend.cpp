@@ -219,14 +219,12 @@ void BroGLBackend::SurfacePolychain(poly_t *p) {
 	numVertices = input.numVertices;
 	for (i = 0; i < p->numVerts; i++) {
 		// Copy poly vertices locations to input
-		//VectorCopy(p->verts[i].xyz, input.xyz[numVertices]);
 		input.xyz[numVertices] = glm::vec4(p->verts[i].xyz, 1.0);
 		*(int *)&input.vertexColors[numVertices] = *(int *)p->verts[i].color;
 		numVertices++;
 	}
 
 	// Generate indexes into the input array
-	// TODO - Since we are generating buffers, this may not be necessary
 	for (i = 0; i < p->numVerts - 2; i++) {
 		input.indexes[input.numIndices + 0] = input.numVertices;
 		input.indexes[input.numIndices + 1] = input.numVertices + i + 1;
@@ -248,7 +246,6 @@ void BroGLBackend::SurfacePolychain(poly_t *p) {
 void BroGLBackend::SurfaceTriangles(triangles_t *srf) {
 	int			i;
 	vert  	*dv;
-	//glm::vec4		*xyz;
 	float		*color;
 
 	for (i = 0; i < srf->numIndices; i += 3) {
@@ -259,18 +256,15 @@ void BroGLBackend::SurfaceTriangles(triangles_t *srf) {
 	input.numIndices += srf->numIndices;
 
 	dv = srf->verts;
-	//xyz = &input.xyz[input.numVertices];
 	color = input.vertexColors[input.numVertices];
 
 	for (i = 0; i < srf->numVerts; i++, dv++, color += 4) {
-		// TODO: fix it, it's gross
 		input.xyz[input.numVertices + i] = glm::vec4(dv->xyz, 1.0);
 
 		color[0] = dv->color[0];
 		color[1] = dv->color[1];
 		color[2] = dv->color[2];
 		color[3] = dv->color[3];
-		//*(color4f_t *)color = *(color4f_t *)dv->color;
 	}
 
 	input.numVertices += srf->numVerts;

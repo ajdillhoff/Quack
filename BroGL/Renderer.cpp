@@ -1,21 +1,5 @@
 #include "Renderer.h"
 
-static GLfloat	s_flipMatrix[16] = {
-	// convert from our coordinate system (looking down X)
-	// to OpenGL's coordinate system (looking down -Z)
-	0, 0, -1, 0,
-	-1, 0, 0, 0,
-	0, 1, 0, 0,
-	0, 0, 0, 1
-};
-
-static float s_identityMatrix[16] = {
-	1, 0, 0, 0,
-	0, 1, 0, 0,
-	0, 0, 1, 0,
-	0, 0, 0, 1
-};
-
 Renderer::Renderer() {
 	refdef = new RefDef();
 
@@ -134,26 +118,6 @@ void Renderer::RotateForViewer() {
 	origin = viewParms.or.origin;
 
 	viewerMatrix = glm::mat4(viewParms.or.axis);
-
-	//viewerMatrix[0] = viewParms.or.axis[0][0];
-	//viewerMatrix[4] = viewParms.or.axis[0][1];
-	//viewerMatrix[8] = viewParms.or.axis[0][2];
-	//viewerMatrix[12] = -origin[0] * viewerMatrix[0] + -origin[1] * viewerMatrix[4] + -origin[2] * viewerMatrix[8];
-
-	//viewerMatrix[1] = viewParms.or.axis[1][0];
-	//viewerMatrix[5] = viewParms.or.axis[1][1];
-	//viewerMatrix[9] = viewParms.or.axis[1][2];
-	//viewerMatrix[13] = -origin[0] * viewerMatrix[1] + -origin[1] * viewerMatrix[5] + -origin[2] * viewerMatrix[9];
-
-	//viewerMatrix[2] = viewParms.or.axis[2][0];
-	//viewerMatrix[6] = viewParms.or.axis[2][1];
-	//viewerMatrix[10] = viewParms.or.axis[2][2];
-	//viewerMatrix[14] = -origin[0] * viewerMatrix[2] + -origin[1] * viewerMatrix[6] + -origin[2] * viewerMatrix[10];
-
-	//viewerMatrix[3] = 0;
-	//viewerMatrix[7] = 0;
-	//viewerMatrix[11] = 0;
-	//viewerMatrix[15] = 1;
 	viewerMatrix = glm::translate(viewerMatrix, -origin);
 
 	orientation.modelMatrix = viewerMatrix;
@@ -173,8 +137,6 @@ void Renderer::SetupProjectionMatrix() {
 	// TODO: This is very simple for now. The data should come from outside of
 	// the rendering class. For example, the view parameters are different for
 	// each scene.
-
-	//float ViewDistance = 1 / tan(refdef->camera->fov_x * M_PI / 360.0f);
 
 	float	xmin, xmax, ymin, ymax;
 	float	width, height, depth;
@@ -215,7 +177,5 @@ void Renderer::SetupProjectionMatrix() {
 	viewParms.projectionMatrix[3][1] = 0;
 	viewParms.projectionMatrix[3][2] = -1;
 	viewParms.projectionMatrix[3][3] = 0;
-
-	//viewParms.projectionMatrix = glm::transpose(viewParms.projectionMatrix);
 
 }
