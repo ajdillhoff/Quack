@@ -216,4 +216,6 @@ void Renderer::SetupProjectionMatrix() {
 	viewParms.projectionMatrix[3][2] = -1;
 	viewParms.projectionMatrix[3][3] = 0;
 
+	//viewParms.projectionMatrix = glm::transpose(viewParms.projectionMatrix);
+
 }

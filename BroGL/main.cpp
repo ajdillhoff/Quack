@@ -30,6 +30,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (1) {
 		sc->ToggleNewFrame();
 
+		ent->direction = glm::rotate(ent->direction, float(0.001), glm::vec3(1, 0, 0));
+
 		sc->AddEntityToScene(ent);
 
 		sc->RenderScene(rd);

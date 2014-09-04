@@ -7,7 +7,10 @@ out vec4 ex_Color;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 
+mat4 temp;
+
 void main(void) {
-	gl_Position = projectionMatrix * modelViewMatrix * in_Position;
+	temp = projectionMatrix * modelViewMatrix;
+	gl_Position = temp * in_Position;
 	ex_Color = in_Color;
 }

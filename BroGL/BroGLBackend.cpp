@@ -88,7 +88,7 @@ void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs,
 // Description: Currently this is the catch all for rendering
 //************************************
 void BroGLBackend::DrawTris() {
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	/* OpenGL 3+ stuff */
 	// Set up the buffer arrays

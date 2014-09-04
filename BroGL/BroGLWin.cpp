@@ -217,7 +217,7 @@ void BroGLWin::StartOpenGL(void) {
 	ReleaseDC(GetDesktopWindow(), hDC);
 
 	// Create the window
-	if (!B_CreateWindow(800, 600, 24)) {
+	if (!B_CreateWindow(1680, 1050, 24)) {
 
 		// some sort of error checking
 	}

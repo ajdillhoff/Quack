@@ -21,15 +21,15 @@ void Entity::GenerateTestEntity() {
 	v1.color[2] = 1.0;
 	v1.color[3] = 1.0;
 
-	v2.xyz[0] = 0.5;
-	v2.xyz[1] = 3.0;
-	v2.xyz[2] = 0.5;
+	v2.xyz[0] = 2.5;
+	v2.xyz[1] = 5.0;
+	v2.xyz[2] = 2.5;
 	v2.color[0] = 1.0;
 	v2.color[1] = 0;
 	v2.color[2] = 1.0;
 	v2.color[3] = 1.0;
 
-	v3.xyz[0] = 1.0;
+	v3.xyz[0] = 5.0;
 	v3.xyz[1] = 0.0;
 	v3.xyz[2] = 0.0;
 	v3.color[0] = 1.0;
@@ -37,9 +37,9 @@ void Entity::GenerateTestEntity() {
 	v3.color[2] = 0;
 	v3.color[3] = 1.0;
 
-	v4.xyz[0] = 1.0;
+	v4.xyz[0] = 5.0;
 	v4.xyz[1] = 0.0;
-	v4.xyz[2] = 1.0;
+	v4.xyz[2] = 5.0;
 	v4.color[0] = 0;
 	v4.color[1] = 0;
 	v4.color[2] = 1.0;
@@ -47,7 +47,7 @@ void Entity::GenerateTestEntity() {
 
 	v5.xyz[0] = 0.0;
 	v5.xyz[1] = 0.0;
-	v5.xyz[2] = 1.0;
+	v5.xyz[2] = 5.0;
 	v5.color[0] = 1.0;
 	v5.color[1] = 1.0;
 	v5.color[2] = 1.0;
@@ -77,10 +77,11 @@ void Entity::GenerateTestEntity() {
 	model->indices[11] = 0;
 
 	// Set world info
-	origin[0] = 2.0f;
+	origin[0] = 0.0f;
 	origin[1] = 0.0f;
 	origin[2] = 0.0f;
 
 	direction = glm::mat4();
-	direction = glm::rotate(direction, float(45.0), glm::vec3(0, 1, 0));
+	//direction = glm::rotate(direction, float(45.0), glm::vec3(0, 1, 0));
+	//direction = glm::rotate(direction, float(45.0), glm::vec3(1, 0, 0));
 }
