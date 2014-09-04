@@ -15,6 +15,8 @@ BroGLBackend::BroGLBackend(BroGLWin* newWindow) {
 	polyVerts = new vert[MAX_POLYVERTS];
 
 	CreateShaders();
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 }
 
 BroGLBackend::~BroGLBackend() {

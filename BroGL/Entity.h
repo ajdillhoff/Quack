@@ -8,6 +8,7 @@ public:
 
 	// Used for testing and debugging
 	void GenerateTestEntity();
+	void GenerateSquareEntity();
 
 	glm::mat4 direction;
 	glm::vec3 origin;

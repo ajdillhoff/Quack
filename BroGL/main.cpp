@@ -18,13 +18,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Scene *sc = new Scene(re);
 
 	Entity *ent = new Entity();
-	ent->GenerateTestEntity();
+	ent->GenerateSquareEntity();
 
 	// main loop
 	while (1) {
 		sc->ToggleNewFrame();
 
-		ent->direction = glm::rotate(ent->direction, float(0.001), glm::vec3(0, 1, 1));
+		ent->direction = glm::rotate(ent->direction, float(0.0005), glm::vec3(1, 1, 0));
 
 		sc->AddEntityToScene(ent);
 

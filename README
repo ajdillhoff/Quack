@@ -6,7 +6,7 @@ Description: Open source, object-oriented, software graphics rendering engine
 	     Each new milestone will represent a new version of the engine. This
        engine will be based on the rendering architecture of the Quake 3
        engine.
-Dependencies: FreeGLUT and GLEW
+Dependencies: GLEW
 
 % Milestones
 Milestone 1: Basic Rendering

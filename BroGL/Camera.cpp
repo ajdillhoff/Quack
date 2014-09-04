@@ -14,7 +14,7 @@ Camera::Camera() {
 
 	viewOrigin[0] = 0.5;
 	viewOrigin[1] = 0.0;
-	viewOrigin[2] = 10.0;
+	viewOrigin[2] = 5.0;
 
 	viewMatrix = glm::mat4();
 
