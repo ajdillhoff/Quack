@@ -22,7 +22,7 @@ void Entity::GenerateTestEntity() {
 	v1.color[3] = 1.0;
 
 	v2.xyz[0] = 0.5;
-	v2.xyz[1] = 1.0;
+	v2.xyz[1] = 3.0;
 	v2.xyz[2] = 0.5;
 	v2.color[0] = 1.0;
 	v2.color[1] = 0;
