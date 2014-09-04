@@ -116,10 +116,8 @@ void Scene::RenderScene(RefDef *rd) {
 	parms.fovX = re->refdef->camera->fov_x;
 	parms.fovY = re->refdef->camera->fov_y;
 
-	VectorCopy(re->refdef->camera->viewOrigin, parms.or.origin);
-	VectorCopy(re->refdef->camera->viewMatrix[0], parms.or.axis[0]);
-	VectorCopy(re->refdef->camera->viewMatrix[1], parms.or.axis[1]);
-	VectorCopy(re->refdef->camera->viewMatrix[2], parms.or.axis[2]);
+	parms.or.origin = re->refdef->camera->viewOrigin;
+	parms.or.axis = re->refdef->camera->viewMatrix;
 
 	// Render the view
 	re->RenderView(&parms);

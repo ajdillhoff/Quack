@@ -12,16 +12,16 @@
 typedef float color4f_t[4];
 
 typedef struct {
-	vec3 xyz;
-	vec3 normal;
+	glm::vec3 xyz;
+	glm::vec3 normal;
 	color4f_t color;
 } vert;
 
 typedef struct {
-	vec3 origin; // world coordinates
-	vec3 axis[3]; // world orientation
-	vec3 viewOrigin; // origin in local coordinates
-	float modelMatrix[16];
+	glm::vec3 origin; // world coordinates
+	glm::mat4 axis; // world orientation
+	glm::vec3 viewOrigin; // origin in local coordinates
+	glm::mat4 modelMatrix;
 } orientation_t;
 
 typedef struct {
@@ -29,12 +29,12 @@ typedef struct {
 	orientation_t world;
 	int viewPortX, viewPortY, viewPortWidth, viewPortHeight;
 	float fovX, fovY;
-	float projectionMatrix[16];
+	glm::mat4 projectionMatrix;
 } viewParms_t;
 
 // TODO: Using this temporarily to try and make sense of the Q3 renderer
 typedef struct {
-	vec4 xyz[SHADER_MAX_VERTICES];
+	glm::vec4 xyz[SHADER_MAX_VERTICES];
 	color4f_t vertexColors[SHADER_MAX_VERTICES];
 	glIndex_t indexes[SHADER_MAX_INDICES];
 	

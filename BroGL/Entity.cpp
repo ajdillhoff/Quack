@@ -22,7 +22,7 @@ void Entity::GenerateTestEntity() {
 	v1.color[3] = 1.0;
 
 	v2.xyz[0] = 0.5;
-	v2.xyz[1] = -1.0;
+	v2.xyz[1] = 1.0;
 	v2.xyz[2] = 0.5;
 	v2.color[0] = 1.0;
 	v2.color[1] = 0;
@@ -77,19 +77,10 @@ void Entity::GenerateTestEntity() {
 	model->indices[11] = 0;
 
 	// Set world info
-	origin[0] = 0.0;
-	origin[1] = 0.0;
-	origin[2] = 0.0;
+	origin[0] = 2.0f;
+	origin[1] = 0.0f;
+	origin[2] = 0.0f;
 
-	direction[0][0] = 0.0;
-	direction[0][1] = 0.0;
-	direction[0][2] = 0.0;
-
-	direction[1][0] = 0.0;
-	direction[1][1] = 0.0;
-	direction[1][2] = 0.0;
-
-	direction[2][0] = 0.0;
-	direction[2][1] = 0.0;
-	direction[2][2] = 0.0;
+	direction = glm::mat4();
+	direction = glm::rotate(direction, float(45.0), glm::vec3(0, 1, 0));
 }

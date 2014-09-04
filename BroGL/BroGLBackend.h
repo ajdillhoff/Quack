@@ -5,11 +5,13 @@
 #include "Entity.h"
 #include "RefDef.h"
 #include "BShared.h"
+#include "BroShader.h"
 
 class BroGLBackend {
 public:
 	drawSurf_t drawSurfs[MAX_DRAWSURFS];
 	Entity entities[MAX_ENTITIES];
+	Entity *currentEntity;
 	poly_t *polys;
 	vert *polyVerts;
 
@@ -21,6 +23,9 @@ public:
 	RefDef *refdef;
 
 	BroGLWin *win; // reference to window
+
+	// Shader debug
+	BroShader *shader;
 
 	BroGLBackend();
 	BroGLBackend(BroGLWin*);
@@ -64,7 +69,7 @@ public:
 	// Returns:   void
 	// Qualifier:
 	//************************************
-	void DrawTris(shaderCommands_t*);
+	void DrawTris();
 
 	//************************************
 	// Method:    RenderDrawSurfaceList
@@ -75,6 +80,18 @@ public:
 	// Description: The entry point for the rendering of polys or surfaces
 	//************************************
 	void RenderDrawSurfaceList(drawSurf_t *, int);
+
+	//************************************
+	// Method:    RotateForEntity
+	// FullName:  RotateForEntity
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: Entity * ent
+	// Parameter: viewParms_t * parms
+	// Parameter: orientation_t * or
+	//************************************
+	void RotateForEntity(Entity *ent, viewParms_t *parms, orientation_t *or);
 
 	//************************************
 	// Method:    SurfacePolychain

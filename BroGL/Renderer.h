@@ -1,4 +1,4 @@
-#include <math.h>
+#include "BShared.h"
 #include "BroGLBackend.h"
 
 #pragma once
@@ -61,18 +61,6 @@ public:
 	void GenerateDrawSurfaces();
 
 	//************************************
-	// Method:    MyGlMultMatrix
-	// FullName:  Renderer::MyGlMultMatrix
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: const float * a
-	// Parameter: const float * b
-	// Parameter: float * out
-	//************************************
-	void Renderer::MyGlMultMatrix(const float *a, const float *b, float *out);
-
-	//************************************
 	// Method:    RenderView
 	// FullName:  Renderer::RenderView
 	// Access:    public 
@@ -81,18 +69,6 @@ public:
 	// Description: Renders all of the objects loaded into the current view.
 	//************************************
 	void RenderView(viewParms_t *parms);
-
-	//************************************
-	// Method:    RotateForEntity
-	// FullName:  Renderer::RotateForEntity
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: Entity * ent
-	// Parameter: viewParms_t * parms
-	// Parameter: orientation_t * or
-	//************************************
-	void RotateForEntity(Entity *ent, viewParms_t *parms, orientation_t *or);
 
 	//************************************
 	// Method:    RotateForViewer
