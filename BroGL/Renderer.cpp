@@ -146,7 +146,7 @@ void Renderer::SetupProjectionMatrix() {
 	// set up projection matrix
 	//
 	zNear = 1;
-	zFar = 2048;
+	zFar = 10000;
 
 	ymax = zNear * tan(refdef->camera->fov_y * M_PI / 360.0f);
 	ymin = -ymax;

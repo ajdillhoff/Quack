@@ -94,6 +94,16 @@ public:
 	void RotateForEntity(Entity *ent, viewParms_t *parms, orientation_t *or);
 
 	//************************************
+	// Method:    SetDefaultState
+	// FullName:  BroGLBackend::SetDefaultState
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: void
+	//************************************
+	void SetDefaultState(void);
+
+	//************************************
 	// Method:    SurfacePolychain
 	// FullName:  SurfacePolychain
 	// Access:    public 
@@ -121,6 +131,7 @@ private:
 		VaoId,
 		VboId,
 		ColorBufferId,
-		IndexBufferId;
+		IndexBufferId,
+		NormalBufferId;
 };
 

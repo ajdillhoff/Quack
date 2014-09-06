@@ -35,6 +35,7 @@ typedef struct {
 // TODO: Using this temporarily to try and make sense of the Q3 renderer
 typedef struct {
 	glm::vec4 xyz[SHADER_MAX_VERTICES];
+	glm::vec3 normal[SHADER_MAX_VERTICES];
 	color4f_t vertexColors[SHADER_MAX_VERTICES];
 	glIndex_t indexes[SHADER_MAX_INDICES];
 	

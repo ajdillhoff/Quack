@@ -6,7 +6,7 @@ BroShader::BroShader() {
 	VertexHandle = -1;
 	FragmentHandle = -1;
 
-	const char *DefaultVertexShader = "Shaders/DefaultVertex.shader";
+	const char *DefaultVertexShader = "Shaders/LightingVertex.shader";
 	const char *DefaultFragmentShader = "Shaders/DefaultFragment.shader";
 
 	// Use Defaults

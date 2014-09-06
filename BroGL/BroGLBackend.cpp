@@ -15,8 +15,7 @@ BroGLBackend::BroGLBackend(BroGLWin* newWindow) {
 	polyVerts = new vert[MAX_POLYVERTS];
 
 	CreateShaders();
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
+	SetDefaultState();
 }
 
 BroGLBackend::~BroGLBackend() {
@@ -100,7 +99,7 @@ void BroGLBackend::DrawTris() {
 	// Vertex Buffer
 	glGenBuffers(1, &VboId);
 	glBindBuffer(GL_ARRAY_BUFFER, VboId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4)* input.numVertices, &input.xyz[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * input.numVertices, &input.xyz[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), 0);
 	glEnableVertexAttribArray(0);
 
@@ -111,6 +110,13 @@ void BroGLBackend::DrawTris() {
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(1);
 
+	// Vertex Normal Buffer
+	glGenBuffers(1, &NormalBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, NormalBufferId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * input.numVertices, &input.normal[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+	glEnableVertexAttribArray(2);
+
 	// Index Buffer
 	glGenBuffers(1, &IndexBufferId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);
@@ -120,6 +126,7 @@ void BroGLBackend::DrawTris() {
 	glDrawElements(GL_TRIANGLES, input.numIndices, GL_UNSIGNED_INT, 0);
 
 	// Destroy the buffer objects
+	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
 
@@ -131,6 +138,9 @@ void BroGLBackend::DrawTris() {
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glDeleteBuffers(1, &IndexBufferId);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDeleteBuffers(1, &NormalBufferId);
 
 	glBindVertexArray(0);
 	glDeleteVertexArrays(1, &VaoId);
@@ -165,8 +175,16 @@ void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs,
 		currentEntity = &entities[entityNum++];
 
 		// Set up the model view matrix, if necessary
-		RotateForEntity(currentEntity, &viewParms, &orientation);
-		shader->SetUniform("modelViewMatrix", orientation.modelMatrix);
+		//RotateForEntity(currentEntity, &viewParms, &orientation);
+
+		// Get the model matrix
+		glm::mat4 glMatrix = glm::mat4(currentEntity->direction);
+		glMatrix[0][3] = currentEntity->origin[0];
+		glMatrix[1][3] = currentEntity->origin[1];
+		glMatrix[2][3] = currentEntity->origin[2];
+
+		shader->SetUniform("modelMatrix", glMatrix);
+		shader->SetUniform("viewMatrix", viewParms.world.modelMatrix);
 
 		// Add the triangles to an index array - for now these represent our model.
 		SurfaceTriangles(reinterpret_cast<triangles_t*>(drawSurf->surface));
@@ -205,6 +223,30 @@ void BroGLBackend::RotateForEntity(Entity *ent, viewParms_t *parms, orientation_
 	glMatrix[2][3] = or->origin[2];
 
 	or->modelMatrix = parms->world.modelMatrix * glMatrix;
+}
+
+//************************************
+// Method:    SetDefaultState
+// FullName:  BroGLBackend::SetDefaultState
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: void
+// Description: Sets the default OpenGL settings
+//************************************
+void BroGLBackend::SetDefaultState(void) {
+	glClearDepth(1.0f);
+	glCullFace(GL_FRONT);
+
+	// smooth will interpolate all 3 vertices
+	glShadeModel(GL_FLAT);
+	glDepthFunc(GL_LEQUAL);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_SCISSOR_TEST);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_BLEND);
 }
 
 //************************************
@@ -262,6 +304,7 @@ void BroGLBackend::SurfaceTriangles(triangles_t *srf) {
 
 	for (i = 0; i < srf->numVerts; i++, dv++, color += 4) {
 		input.xyz[input.numVertices + i] = glm::vec4(dv->xyz, 1.0);
+		input.normal[input.numVertices + i] = dv->normal;
 
 		color[0] = dv->color[0];
 		color[1] = dv->color[1];
