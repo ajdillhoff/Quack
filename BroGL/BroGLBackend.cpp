@@ -14,6 +14,9 @@ BroGLBackend::BroGLBackend(BroGLWin* newWindow) {
 	polys = new poly_t[MAX_POLYS];
 	polyVerts = new vert[MAX_POLYVERTS];
 
+  input.numIndices = 0;
+  input.numVertices = 0;
+
 	CreateShaders();
 	SetDefaultState();
 }

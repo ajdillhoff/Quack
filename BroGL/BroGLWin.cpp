@@ -9,6 +9,7 @@ BroGLWin::BroGLWin(HINSTANCE hInstance) {
 	hinstOpenGL = hInstance;
 	pixelFormatSet = false;
 	frameCount = 0;
+  classRegistered = false;
 }
 
 BroGLWin::~BroGLWin() {
@@ -221,6 +222,7 @@ void BroGLWin::StartOpenGL(void) {
 	if (!B_CreateWindow(1680, 1050, 24)) {
 
 		// some sort of error checking
+    int i = 0;
 	}
 }
 
