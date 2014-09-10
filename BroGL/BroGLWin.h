@@ -90,7 +90,7 @@ public:
 	static LONG WINAPI SWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp);
 
 protected:
-	PIXELFORMATDESCRIPTOR pfd;
+	PIXELFORMATDESCRIPTOR bpfd;
 
 	WNDPROC wndproc;
 

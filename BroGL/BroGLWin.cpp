@@ -15,8 +15,7 @@ BroGLWin::~BroGLWin() {
 }
 
 void BroGLWin::CreatePFD(int colorBits, int depthBits, int stencilBits) {
-	pfd =
-	{
+	PIXELFORMATDESCRIPTOR p = {
 		sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
 		1,															// version number
 		PFD_DRAW_TO_WINDOW |						// support window
@@ -37,9 +36,11 @@ void BroGLWin::CreatePFD(int colorBits, int depthBits, int stencilBits) {
 		0, 0, 0													// layer masks ignored
 	};
 
-	pfd.cColorBits = colorBits;
-	pfd.cDepthBits = depthBits;
-	pfd.cStencilBits = stencilBits;
+	bpfd = p;
+
+	bpfd.cColorBits = colorBits;
+	bpfd.cDepthBits = depthBits;
+	bpfd.cStencilBits = stencilBits;
 }
 
 //************************************
@@ -170,11 +171,11 @@ int BroGLWin::MakeContext() {
 		// Set it up!
 		CreatePFD(32, 24, 8);
 
-		if ((pixelformat = ChoosePixelFormat(hDC, &pfd)) == 0) {
+		if ((pixelformat = ChoosePixelFormat(hDC, &bpfd)) == 0) {
 			return 0;
 		}
 
-		if (!SetPixelFormat(hDC, pixelformat, &pfd)) {
+		if (!SetPixelFormat(hDC, pixelformat, &bpfd)) {
 			return 0;
 		}
 
