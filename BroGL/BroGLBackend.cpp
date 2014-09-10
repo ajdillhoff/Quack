@@ -239,8 +239,8 @@ void BroGLBackend::SetDefaultState(void) {
 	glCullFace(GL_FRONT);
 
 	// smooth will interpolate all 3 vertices
-	glShadeModel(GL_FLAT);
-	glDepthFunc(GL_LEQUAL);
+	glShadeModel(GL_SMOOTH);
+	glDepthFunc(GL_LESS);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glEnable(GL_DEPTH_TEST);

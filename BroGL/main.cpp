@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (1) {
 		sc->ToggleNewFrame();
 
-		//ent->Rotate(0.01, glm::vec3(1, 0, 0));
+		ent->Rotate(0.01, glm::vec3(1, 0, 0));
 		ent->Rotate(0.03, glm::vec3(0, 1, 0));
 
 		sc->AddEntityToScene(ent);

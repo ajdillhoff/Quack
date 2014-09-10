@@ -107,7 +107,7 @@ void Entity::GenerateSquareEntity() {
 	v1.color[1] = 1.0;
 	v1.color[2] = 1.0;
 	v1.color[3] = 1.0;
-	v1.normal = glm::normalize(z + xNeg + yNeg);
+	v1.normal = glm::normalize(zNeg + xNeg + yNeg);
 
 	v2.xyz[0] = 1.0;
 	v2.xyz[1] = 0.0;
@@ -116,7 +116,7 @@ void Entity::GenerateSquareEntity() {
 	v2.color[1] = 0;
 	v2.color[2] = 1.0;
 	v2.color[3] = 1.0;
-	v2.normal = glm::normalize(z + x + yNeg);
+	v2.normal = glm::normalize(zNeg + x + yNeg);
 
 	v3.xyz[0] = 0.0;
 	v3.xyz[1] = 1.0;
@@ -125,7 +125,7 @@ void Entity::GenerateSquareEntity() {
 	v3.color[1] = 0;
 	v3.color[2] = 0;
 	v3.color[3] = 1.0;
-	v3.normal = glm::normalize(z + xNeg + y);
+	v3.normal = glm::normalize(zNeg + xNeg + y);
 
 	v4.xyz[0] = 1.0;
 	v4.xyz[1] = 1.0;
@@ -134,7 +134,7 @@ void Entity::GenerateSquareEntity() {
 	v4.color[1] = 0;
 	v4.color[2] = 1.0;
 	v4.color[3] = 1.0;
-	v4.normal = glm::normalize(z + x + y);
+	v4.normal = glm::normalize(zNeg + x + y);
 
 	v5.xyz[0] = 0.0;
 	v5.xyz[1] = 0.0;
@@ -143,7 +143,7 @@ void Entity::GenerateSquareEntity() {
 	v5.color[1] = 1.0;
 	v5.color[2] = 1.0;
 	v5.color[3] = 1.0;
-	v5.normal = glm::normalize(zNeg + xNeg + yNeg);
+	v5.normal = glm::normalize(z + xNeg + yNeg);
 
 	v6.xyz[0] = 1.0;
 	v6.xyz[1] = 0.0;
@@ -152,7 +152,7 @@ void Entity::GenerateSquareEntity() {
 	v6.color[1] = 0.0;
 	v6.color[2] = 1.0;
 	v6.color[3] = 1.0;
-	v6.normal = glm::normalize(zNeg + x + yNeg);
+	v6.normal = glm::normalize(z + x + yNeg);
 
 	v7.xyz[0] = 0.0;
 	v7.xyz[1] = 1.0;
@@ -161,7 +161,7 @@ void Entity::GenerateSquareEntity() {
 	v7.color[1] = 0.0;
 	v7.color[2] = 1.0;
 	v7.color[3] = 1.0;
-	v7.normal = glm::normalize(zNeg + xNeg + y);
+	v7.normal = glm::normalize(z + xNeg + y);
 
 	v8.xyz[0] = 1.0;
 	v8.xyz[1] = 1.0;
@@ -170,7 +170,7 @@ void Entity::GenerateSquareEntity() {
 	v8.color[1] = 0.0;
 	v8.color[2] = 1.0;
 	v8.color[3] = 1.0;
-	v8.normal = glm::normalize(zNeg + x + y);
+	v8.normal = glm::normalize(z + x + y);
 
 	model->numVerts = 8;
 	model->verts = new vert[model->numVerts];
@@ -188,11 +188,11 @@ void Entity::GenerateSquareEntity() {
 
 	// Front
 	model->indices[0] = 0;
-	model->indices[1] = 1;
-	model->indices[2] = 3;
+	model->indices[1] = 3;
+	model->indices[2] = 1;
 	model->indices[3] = 0;
-	model->indices[4] = 3;
-	model->indices[5] = 2;
+	model->indices[4] = 2;
+	model->indices[5] = 3;
 
 	// Right
 	model->indices[6] = 1;
@@ -241,7 +241,7 @@ void Entity::GenerateSquareEntity() {
 
 	direction = glm::mat4();
 	center = glm::vec3(0.5, 0.5, 0.5);
-	//Rotate(-70, glm::vec3(0.0, 1.0, 0.0));
+	//Rotate(-90, glm::vec3(0.0, 1.0, 0.0));
 }
 
 //************************************
