@@ -1,8 +1,6 @@
 #include "BroGLWin.h"
 #include "BroInput.h"
 
-Input input;
-
 BroGLWin::BroGLWin() {
 }
 
@@ -11,7 +9,7 @@ BroGLWin::BroGLWin(HINSTANCE hInstance) {
 	hinstOpenGL = hInstance;
 	pixelFormatSet = false;
 	frameCount = 0;
-  classRegistered = false;
+	classRegistered = false;
 }
 
 BroGLWin::~BroGLWin() {
@@ -65,7 +63,7 @@ bool BroGLWin::B_CreateWindow(int width, int height, int colorBits) {
 		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.lpfnWndProc = (WNDPROC)wndproc;
 		wc.cbClsExtra = 0;
-		wc.cbWndExtra = sizeof(void*) + sizeof(int);
+		wc.cbWndExtra = sizeof(void*)+sizeof(int);
 		wc.hInstance = GetModuleHandle(NULL);
 		//wc.hIcon = LoadIcon(hinstOpenGL, MAKEINTRESOURCE(IDI_ICON1));
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -224,37 +222,37 @@ void BroGLWin::StartOpenGL(void) {
 	if (!B_CreateWindow(1680, 1050, 24)) {
 
 		// some sort of error checking
-    int i = 0;
+		int i = 0;
 	}
 }
 
 char translateKey(WPARAM wParam, LPARAM lParam) {
-    // TODO check special keys if numlock is on
-    /*if ((HIWORD(lParam) & 0x100) == 0) {
-        switch (MapVirtualKey(HIWORD(lParam) & 0xFF, 1)) {
-			
-        }
-    }*/
+	// TODO check special keys if numlock is on
+	/*if ((HIWORD(lParam) & 0x100) == 0) {
+			switch (MapVirtualKey(HIWORD(lParam) & 0xFF, 1)) {
 
-    switch (HIWORD(lParam) & 0xFF) {
+			}
+			}*/
+
+	switch (HIWORD(lParam) & 0xFF) {
 		// w
-        case 0x11:             
-			return 'W';
+	case 0x11:
+		return 'W';
 		// a
-        case 0x1E:             
-			return 'A';
+	case 0x1E:
+		return 'A';
 		// s
-        case 0x1F:             
-			return 'S';
+	case 0x1F:
+		return 'S';
 		// d
-        case 0x20:             
-			return 'D';
-        default:               
-			break;
-    }
+	case 0x20:
+		return 'D';
+	default:
+		break;
+	}
 
-    // No matching translation was found
-    return 0;
+	// No matching translation was found
+	return 0;
 }
 
 LONG WINAPI BroGLWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -264,31 +262,25 @@ LONG WINAPI BroGLWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 		break;
 	case WM_CREATE:
 	{
-		LPCREATESTRUCT cs = reinterpret_cast<LPCREATESTRUCT>(lParam);
-		void * lpCreateParam = cs->lpCreateParams;
-		BroGLWin *win = reinterpret_cast<BroGLWin *>(lpCreateParam);
-		assert(win == this);
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+									LPCREATESTRUCT cs = reinterpret_cast<LPCREATESTRUCT>(lParam);
+									void * lpCreateParam = cs->lpCreateParams;
+									BroGLWin *win = reinterpret_cast<BroGLWin *>(lpCreateParam);
+									assert(win == this);
+									return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
-<<<<<<< HEAD
-=======
 	case WM_CHAR:
 	case WM_KEYDOWN:
 	case WM_SYSCHAR:
 	case WM_UNICHAR:
-    case WM_SYSKEYDOWN:
-        {
-            const char key = translateKey(wParam, lParam);
-            if (key == 0)
-                break;
+	case WM_SYSKEYDOWN:
+	{
+											const char key = translateKey(wParam, lParam);
+											if (key == 0)
+												break;
 
-			input.ComputeMatricesFromInputs(key);
-            //_glfwInputKey(hWnd, key, scancode, GLFW_PRESS, getKeyMods());
-            break;
-        }
-	default:
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
->>>>>>> 60f438046b9dfc98c27bf1fbf1ec911b948f9311
+											input->HandleKeyPress(key);
+											break;
+	}
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
@@ -313,4 +305,3 @@ LONG WINAPI BroGLWin::SWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 		return DefWindowProc(hwnd, msg, wp, lp);
 	}
 }
-

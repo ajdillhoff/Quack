@@ -6,6 +6,7 @@
 #include "RefDef.h"
 #include "BShared.h"
 #include "BroShader.h"
+#include "BroInput.h"
 
 class BroGLBackend {
 public:

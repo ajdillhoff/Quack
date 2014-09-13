@@ -2,18 +2,22 @@
 #include "BroGLBackend.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	Camera *camera = new Camera();
+
+	RefDef *rd = new RefDef(camera);
+
+	// TODO: This is temporary, only for testing.
+	Input *input = new Input(camera);
+
 	// Init the window and context
 	BroGLWin *bgl = new BroGLWin(hInstance);
 	bgl->Init();
+	bgl->input = input;
 
 	// Init the backend renderer
 	BroGLBackend *backend = new BroGLBackend(bgl);
 
 	Renderer *re = new Renderer(backend);
-
-	Camera *camera = new Camera();
-
-	RefDef *rd = new RefDef(camera); 
 
 	Scene *sc = new Scene(re);
 

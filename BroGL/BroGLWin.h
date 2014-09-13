@@ -5,6 +5,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/GL.h>
+#include "BroInput.h"
 
 #pragma comment (lib, "opengl32.lib")
 
@@ -13,6 +14,7 @@
 class BroGLWin {
 public:
 	int frameCount;
+	Input *input;
 
 	BroGLWin();
 	BroGLWin(HINSTANCE);

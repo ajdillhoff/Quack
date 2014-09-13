@@ -28,4 +28,3 @@ public:
 	//************************************
 	void Rotate(float degrees, glm::vec3 rotationAxis);
 };
-

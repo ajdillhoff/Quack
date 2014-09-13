@@ -7,7 +7,7 @@ public:
 	Camera();
 	virtual ~Camera();
 
-	int x, y;  // Location
+	int x, y;  // window origin
 	int width, height; // View parameters
 	float fov_x, fov_y;
 	glm::vec3 viewOrigin;
