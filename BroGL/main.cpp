@@ -22,6 +22,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// main loop
 	while (1) {
+		MSG msg;
+
+		// pump the message loop
+		// TODO: this should go in the event manager (when we build it)
+		while (PeekMessage(&msg, NULL,0, 0, PM_REMOVE)) {
+			if (GetMessage(&msg, NULL, 0, 0) < 0) {
+				// TODO: error handling goes here
+			}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
 		sc->ToggleNewFrame();
 
 		ent->Rotate(0.01, glm::vec3(1, 0, 0));

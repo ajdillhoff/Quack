@@ -60,14 +60,14 @@ bool BroGLWin::B_CreateWindow(int width, int height, int colorBits) {
 
 		memset(&wc, 0, sizeof(wc));
 
-		wc.style = 0;
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.lpfnWndProc = (WNDPROC)wndproc;
 		wc.cbClsExtra = 0;
-		wc.cbWndExtra = 0;
-		wc.hInstance = hinstOpenGL;
+		wc.cbWndExtra = sizeof(void*) + sizeof(int);
+		wc.hInstance = GetModuleHandle(NULL);
 		//wc.hIcon = LoadIcon(hinstOpenGL, MAKEINTRESOURCE(IDI_ICON1));
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wc.hbrBackground = (HBRUSH)(COLOR_BACKGROUND);
+		wc.hbrBackground = NULL;
 		wc.lpszMenuName = 0;
 		wc.lpszClassName = WINDOW_CLASS_NAME;
 
@@ -81,7 +81,7 @@ bool BroGLWin::B_CreateWindow(int width, int height, int colorBits) {
 	// create HWND
 	if (!hWnd) {
 		hWnd = CreateWindowEx(
-			WS_EX_TOPMOST,
+			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
 			WINDOW_CLASS_NAME,
 			"BroGL",
 			WS_VISIBLE | WS_OVERLAPPEDWINDOW,
@@ -239,10 +239,8 @@ LONG WINAPI BroGLWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 									assert(win == this);
 									return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
-	default:
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
-	return 0;
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 // Static wndproc created in order to pass a function pointer
