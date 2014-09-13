@@ -26,10 +26,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// pump the message loop
 		// TODO: this should go in the event manager (when we build it)
-		while (PeekMessage(&msg, NULL,0, 0, PM_REMOVE)) {
-			if (GetMessage(&msg, NULL, 0, 0) < 0) {
-				// TODO: error handling goes here
-			}
+		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
