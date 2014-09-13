@@ -72,6 +72,7 @@
     <ClCompile Include="BMath.cpp" />
     <ClCompile Include="BroGLBackend.cpp" />
     <ClCompile Include="BroGLWin.cpp" />
+    <ClCompile Include="BroInput.cpp" />
     <ClCompile Include="BroShader.cpp" />
     <ClCompile Include="BShared.h" />
     <ClCompile Include="Camera.cpp" />
@@ -86,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="BroGLBackend.h" />
     <ClInclude Include="BroGLWin.h" />
+    <ClInclude Include="BroInput.h" />
     <ClInclude Include="BroShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
