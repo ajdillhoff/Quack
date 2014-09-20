@@ -245,6 +245,61 @@ void Entity::GenerateSquareEntity() {
 }
 
 //************************************
+// Method:    LoadTexture
+// FullName:  Entity::LoadTexture
+// Access:    public 
+// Returns:   int
+// Qualifier:
+// Parameter: char * imagePath
+//************************************
+int Entity::LoadTexture(char * imagePath) {
+	unsigned char header[54];
+	unsigned int dataPos;
+	unsigned int width, height;
+	unsigned int imageSize;
+	unsigned char * data;
+	ifstream file;
+
+	file.open(imagePath, ios::in);
+	if (!file) {
+		return 0; // can't open
+	}
+
+	if (fread(header, 1, 54, file) != 54) {
+		return 0; // not a correct bmp file
+	}
+
+	if (header[0] != 'B' || header[1] != 'M') {
+		return 0; // not a correct bmp file
+	}
+
+	// read ints from byte array
+	dataPos   = *(int *)&(header[0x0A]);
+	imageSize = *(int *)&(header[0x22]);
+	width     = *(int *)&(header[0x12]);
+	height    = *(int *)&(header[0x16]);
+
+	if (imageSize == 0) {
+		imageSize = width * height * 3;
+	}
+
+	if (dataPos == 0) {
+		dataPos = 54;
+	}
+
+	data = new unsigned char[imageSize];
+
+	fread(data, 1, imageSize, file);
+
+	fclose(file);
+
+	// create the texture
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+
+}
+
+//************************************
 // Method:    Rotate
 // FullName:  Entity::Rotate
 // Access:    public 

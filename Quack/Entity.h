@@ -18,6 +18,16 @@ public:
 	void GenerateSquareEntity();
 
 	//************************************
+	// Method:    LoadTexture
+	// FullName:  Entity::LoadTexture
+	// Access:    public 
+	// Returns:   int
+	// Qualifier:
+	// Parameter: char * imagePath
+	//************************************
+	int LoadTexture(char * imagePath);
+
+	//************************************
 	// Method:    Rotate
 	// FullName:  Entity::Rotate
 	// Access:    public 
