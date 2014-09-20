@@ -8,7 +8,7 @@
 
 #define SHADER_PATH "Shaders/"
 
-enum BroShaderType {
+enum QuackShaderType {
 	VERTEX,
 	FRAGMENT,
 	//GEOMETRY,
@@ -16,7 +16,7 @@ enum BroShaderType {
 	//TESS_EVALUATION
 };
 
-class BroShader {
+class QuackShader {
 private:
 	int Handle;
 	int VertexHandle;
@@ -31,7 +31,7 @@ private:
 
 	//************************************
 	// Method:    GetFileLength
-	// FullName:  BroShader::GetFileLength
+	// FullName:  QuackShader::GetFileLength
 	// Access:    private 
 	// Returns:   unsigned long
 	// Qualifier:
@@ -41,7 +41,7 @@ private:
 
 	//************************************
 	// Method:    LoadFile
-	// FullName:  BroShader::LoadFile
+	// FullName:  QuackShader::LoadFile
 	// Access:    private 
 	// Returns:   int
 	// Qualifier:
@@ -51,12 +51,12 @@ private:
 	//************************************
 	int LoadFile(const char * fileName, char *& source, unsigned long * length);
 public:
-	BroShader();
-	~BroShader();
+	QuackShader();
+	~QuackShader();
 
 	//************************************
 	// Method:    BindAttribLocation
-	// FullName:  BroShader::BindAttribLocation
+	// FullName:  QuackShader::BindAttribLocation
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -68,7 +68,7 @@ public:
 
 	//************************************
 	// Method:    BindFragDataLocation
-	// FullName:  BroShader::BindFragDataLocation
+	// FullName:  QuackShader::BindFragDataLocation
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -80,7 +80,7 @@ public:
 
 	//************************************
 	// Method:    Compile
-	// FullName:  BroShader::Compile
+	// FullName:  QuackShader::Compile
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -89,7 +89,7 @@ public:
 
 	//************************************
 	// Method:    GetHandle
-	// FullName:  BroShader::GetHandle
+	// FullName:  QuackShader::GetHandle
 	// Access:    public 
 	// Returns:   int
 	// Qualifier:
@@ -98,7 +98,7 @@ public:
 
 	//************************************
 	// Method:    IsLinked
-	// FullName:  BroShader::IsLinked
+	// FullName:  QuackShader::IsLinked
 	// Access:    public 
 	// Returns:   bool
 	// Qualifier:
@@ -107,7 +107,7 @@ public:
 
 	//************************************
 	// Method:    Link
-	// FullName:  BroShader::Link
+	// FullName:  QuackShader::Link
 	// Access:    public 
 	// Returns:   bool
 	// Qualifier:
@@ -116,7 +116,7 @@ public:
 
 	//************************************
 	// Method:    LoadFromFile
-	// FullName:  BroShader::LoadFromFile
+	// FullName:  QuackShader::LoadFromFile
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -126,7 +126,7 @@ public:
 
 	//************************************
 	// Method:    SetUniform
-	// FullName:  BroShader::SetUniform
+	// FullName:  QuackShader::SetUniform
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -141,7 +141,7 @@ public:
 
 	//************************************
 	// Method:    Use
-	// FullName:  BroShader::Use
+	// FullName:  QuackShader::Use
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:

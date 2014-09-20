@@ -1,7 +1,7 @@
-#include "BroShader.h"
+#include "QuackShader.h"
 
 
-BroShader::BroShader() {
+QuackShader::QuackShader() {
 	Handle = glCreateProgram();
 	VertexHandle = -1;
 	FragmentHandle = -1;
@@ -15,12 +15,12 @@ BroShader::BroShader() {
 }
 
 
-BroShader::~BroShader() {
+QuackShader::~QuackShader() {
 }
 
 //************************************
 // Method:    BindAttribLocation
-// FullName:  BroShader::BindAttribLocation
+// FullName:  QuackShader::BindAttribLocation
 // Access:    public 
 // Returns:   void
 // Qualifier:
@@ -28,13 +28,13 @@ BroShader::~BroShader() {
 // Parameter: const char *
 // Description: Wrapper around glBindAttribLocation
 //************************************
-void BroShader::BindAttribLocation(GLuint location, const char * name) {
+void QuackShader::BindAttribLocation(GLuint location, const char * name) {
 
 }
 
 //************************************
 // Method:    BindFragDataLocation
-// FullName:  BroShader::BindFragDataLocation
+// FullName:  QuackShader::BindFragDataLocation
 // Access:    public 
 // Returns:   void
 // Qualifier:
@@ -42,18 +42,18 @@ void BroShader::BindAttribLocation(GLuint location, const char * name) {
 // Parameter: const char *
 // Description: Wrapper around glBindFragDataLocation
 //************************************
-void BroShader::BindFragDataLocation(GLuint location, const char * name) {
+void QuackShader::BindFragDataLocation(GLuint location, const char * name) {
 
 }
 
 //************************************
 // Method:    Compile
-// FullName:  BroShader::Compile
+// FullName:  QuackShader::Compile
 // Access:    public 
 // Returns:   void
 // Qualifier:
 //************************************
-void BroShader::Compile() {
+void QuackShader::Compile() {
 	if (VertexHandle != -1) {
 		glCompileShader(VertexHandle);
 	}
@@ -67,13 +67,13 @@ void BroShader::Compile() {
 
 //************************************
 // Method:    GetFileLength
-// FullName:  BroShader::GetFileLength
+// FullName:  QuackShader::GetFileLength
 // Access:    private 
 // Returns:   unsigned long
 // Qualifier:
 // Parameter: ifstream & file
 //************************************
-unsigned long BroShader::GetFileLength(ifstream& file) {
+unsigned long QuackShader::GetFileLength(ifstream& file) {
 	if (!file.good()) {
 		return 0;
 	}
@@ -88,34 +88,34 @@ unsigned long BroShader::GetFileLength(ifstream& file) {
 
 //************************************
 // Method:    GetHandle
-// FullName:  BroShader::GetHandle
+// FullName:  QuackShader::GetHandle
 // Access:    public 
 // Returns:   int
 // Qualifier:
 //************************************
-int BroShader::GetHandle() {
+int QuackShader::GetHandle() {
 	return Handle;
 }
 
 //************************************
 // Method:    IsLinked
-// FullName:  BroShader::IsLinked
+// FullName:  QuackShader::IsLinked
 // Access:    public 
 // Returns:   bool
 // Qualifier:
 //************************************
-bool BroShader::IsLinked() {
+bool QuackShader::IsLinked() {
 	return Linked;
 }
 
 //************************************
 // Method:    Link
-// FullName:  BroShader::Link
+// FullName:  QuackShader::Link
 // Access:    public 
 // Returns:   bool
 // Qualifier:
 //************************************
-bool BroShader::Link() {
+bool QuackShader::Link() {
 	// TODO: Add error checking
 	glLinkProgram(Handle);
 	GLint linkInt;
@@ -132,7 +132,7 @@ bool BroShader::Link() {
 
 //************************************
 // Method:    LoadFile
-// FullName:  BroShader::LoadFile
+// FullName:  QuackShader::LoadFile
 // Access:    private 
 // Returns:   int
 // Qualifier:
@@ -140,7 +140,7 @@ bool BroShader::Link() {
 // Parameter: char * source
 // Parameter: unsigned long * length
 //************************************
-int BroShader::LoadFile(const char * fileName, char *& source, unsigned long * length) {
+int QuackShader::LoadFile(const char * fileName, char *& source, unsigned long * length) {
 	ifstream file;
 	unsigned int i = 0;
 
@@ -177,13 +177,13 @@ int BroShader::LoadFile(const char * fileName, char *& source, unsigned long * l
 
 //************************************
 // Method:    LoadFromFile
-// FullName:  BroShader::LoadFromFile
+// FullName:  QuackShader::LoadFromFile
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: const char *
 //************************************
-void BroShader::LoadFromFile(GLuint type, const char * fileName) {
+void QuackShader::LoadFromFile(GLuint type, const char * fileName) {
 	// Get the contents of the file and do some error checking
 	char * data = 0;
 	int result;
@@ -219,14 +219,14 @@ void BroShader::LoadFromFile(GLuint type, const char * fileName) {
 
 //************************************
 // Method:    SetUniform
-// FullName:  BroShader::SetUniform
+// FullName:  QuackShader::SetUniform
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: const char *
 // Parameter: type *
 //************************************
-void BroShader::SetUniform(const char * name, glm::mat4 mat) {
+void QuackShader::SetUniform(const char * name, glm::mat4 mat) {
 	GLuint uniformLocation = glGetUniformLocation(Handle, name);
 	if (uniformLocation == -1) {
 		// Unable to find uniform
@@ -237,12 +237,12 @@ void BroShader::SetUniform(const char * name, glm::mat4 mat) {
 
 //************************************
 // Method:    Use
-// FullName:  BroShader::Use
+// FullName:  QuackShader::Use
 // Access:    public 
 // Returns:   void
 // Qualifier:
 //************************************
-void BroShader::Use() {
+void QuackShader::Use() {
 	// TODO: Add error checking
 
 	glUseProgram(Handle);

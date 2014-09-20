@@ -1,14 +1,14 @@
-#include "BroGLBackend.h"
+#include "QuackBackend.h"
 
 
-BroGLBackend::BroGLBackend() {
+QuackBackend::QuackBackend() {
 	//refdef = new RefDef();
 
 	polys = new poly_t[MAX_POLYS];
 	polyVerts = new vert[MAX_POLYVERTS];
 }
 
-BroGLBackend::BroGLBackend(BroGLWin* newWindow) {
+QuackBackend::QuackBackend(QuackWin* newWindow) {
 	win = newWindow;
 
 	polys = new poly_t[MAX_POLYS];
@@ -21,7 +21,7 @@ BroGLBackend::BroGLBackend(BroGLWin* newWindow) {
 	SetDefaultState();
 }
 
-BroGLBackend::~BroGLBackend() {
+QuackBackend::~QuackBackend() {
 	//delete refdef;
 }
 
@@ -32,7 +32,7 @@ BroGLBackend::~BroGLBackend() {
 // Returns:   void
 // Qualifier:
 //************************************
-void BroGLBackend::BeginDrawingView() {
+void QuackBackend::BeginDrawingView() {
 	// Set the projection matrix
 	shader->SetUniform("projectionMatrix", viewParms.projectionMatrix);
 
@@ -43,7 +43,7 @@ void BroGLBackend::BeginDrawingView() {
 
 //************************************
 // Method:    CreateShaders
-// FullName:  BroGLBackend::CreateShaders
+// FullName:  QuackBackend::CreateShaders
 // Access:    public 
 // Returns:   void
 // Qualifier:
@@ -51,8 +51,8 @@ void BroGLBackend::BeginDrawingView() {
 // TODO: If shader operations become too big, consider moving all shader funcs
 // to their own class.
 //************************************
-void BroGLBackend::CreateShaders() {
-	shader = new BroShader();
+void QuackBackend::CreateShaders() {
+	shader = new QuackShader();
 	shader->Compile();
 	shader->Link();
 	shader->Use();
@@ -60,13 +60,13 @@ void BroGLBackend::CreateShaders() {
 
 //************************************
 // Method:    DrawSurfaces
-// FullName:  BroGLBackend::DrawSurfaces
+// FullName:  QuackBackend::DrawSurfaces
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Description: Iterates through all objects and draws them.
 //************************************
-void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs,
+void QuackBackend::DrawSurfaces(drawSurf_t *drawSurfs,
 	int numDrawSurfs,
 	RefDef *rd,
 	viewParms_t vp) {
@@ -85,13 +85,13 @@ void BroGLBackend::DrawSurfaces(drawSurf_t *drawSurfs,
 
 //************************************
 // Method:    DrawTris
-// FullName:  BroGLBackend::DrawTris
+// FullName:  QuackBackend::DrawTris
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Description: Currently this is the catch all for rendering
 //************************************
-void BroGLBackend::DrawTris() {
+void QuackBackend::DrawTris() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	/* OpenGL 3+ stuff */
@@ -159,7 +159,7 @@ void BroGLBackend::DrawTris() {
 // Parameter: int numDrawSurfaces
 // Description: The entry point for the rendering of surfaces
 //************************************
-void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs,
+void QuackBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs,
 	int numDrawSurfaces) {
 	// local variables
 	int i, entityNum = 0;
@@ -208,7 +208,7 @@ void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs,
 
 //************************************
 // Method:    RotateForEntity
-// FullName:  BroGLBackend::RotateForEntity
+// FullName:  QuackBackend::RotateForEntity
 // Access:    public 
 // Returns:   void
 // Qualifier:
@@ -216,7 +216,7 @@ void BroGLBackend::RenderDrawSurfaceList(drawSurf_t *drawSurfs,
 // Parameter: viewParms_t * parms
 // Parameter: orientation_t * or
 //************************************
-void BroGLBackend::RotateForEntity(Entity *ent, viewParms_t *parms, orientation_t *or) {
+void QuackBackend::RotateForEntity(Entity *ent, viewParms_t *parms, orientation_t *or) {
 	or->origin = ent->origin;
 	or->axis = ent->direction;
 
@@ -230,14 +230,14 @@ void BroGLBackend::RotateForEntity(Entity *ent, viewParms_t *parms, orientation_
 
 //************************************
 // Method:    SetDefaultState
-// FullName:  BroGLBackend::SetDefaultState
+// FullName:  QuackBackend::SetDefaultState
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: void
 // Description: Sets the default OpenGL settings
 //************************************
-void BroGLBackend::SetDefaultState(void) {
+void QuackBackend::SetDefaultState(void) {
 	glClearDepth(1.0f);
 	glCullFace(GL_FRONT);
 
@@ -254,13 +254,13 @@ void BroGLBackend::SetDefaultState(void) {
 
 //************************************
 // Method:    SurfacePolychain
-// FullName:  BroGLBackend::SurfacePolychain
+// FullName:  QuackBackend::SurfacePolychain
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: poly * p
 //************************************
-void BroGLBackend::SurfacePolychain(poly_t *p) {
+void QuackBackend::SurfacePolychain(poly_t *p) {
 	int i, numVertices;
 
 	numVertices = input.numVertices;
@@ -284,13 +284,13 @@ void BroGLBackend::SurfacePolychain(poly_t *p) {
 
 //************************************
 // Method:    SurfaceTriangles
-// FullName:  BroGLBackend::SurfaceTriangles
+// FullName:  QuackBackend::SurfaceTriangles
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: triangles_t * srf
 //************************************
-void BroGLBackend::SurfaceTriangles(triangles_t *srf) {
+void QuackBackend::SurfaceTriangles(triangles_t *srf) {
 	int			i;
 	vert  	*dv;
 	float		*color;

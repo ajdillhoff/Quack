@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "BroGLBackend.h"
+#include "QuackBackend.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Camera *camera = new Camera();
@@ -7,15 +7,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	RefDef *rd = new RefDef(camera);
 
 	// TODO: This is temporary, only for testing.
-	Input *input = new Input(camera);
+	QuackInput *input = new QuackInput(camera);
 
 	// Init the window and context
-	BroGLWin *bgl = new BroGLWin(hInstance);
+	QuackWin *bgl = new QuackWin(hInstance);
 	bgl->Init();
 	bgl->input = input;
 
 	// Init the backend renderer
-	BroGLBackend *backend = new BroGLBackend(bgl);
+	QuackBackend *backend = new QuackBackend(bgl);
 
 	Renderer *re = new Renderer(backend);
 

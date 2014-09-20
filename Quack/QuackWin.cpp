@@ -1,10 +1,10 @@
-#include "BroGLWin.h"
-#include "BroInput.h"
+#include "QuackWin.h"
+#include "QuackInput.h"
 
-BroGLWin::BroGLWin() {
+QuackWin::QuackWin() {
 }
 
-BroGLWin::BroGLWin(HINSTANCE hInstance) {
+QuackWin::QuackWin(HINSTANCE hInstance) {
 	wndproc = SWndProc;
 	hinstOpenGL = hInstance;
 	pixelFormatSet = false;
@@ -12,10 +12,10 @@ BroGLWin::BroGLWin(HINSTANCE hInstance) {
 	classRegistered = false;
 }
 
-BroGLWin::~BroGLWin() {
+QuackWin::~QuackWin() {
 }
 
-void BroGLWin::CreatePFD(int colorBits, int depthBits, int stencilBits) {
+void QuackWin::CreatePFD(int colorBits, int depthBits, int stencilBits) {
 	PIXELFORMATDESCRIPTOR p = {
 		sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
 		1,															// version number
@@ -46,7 +46,7 @@ void BroGLWin::CreatePFD(int colorBits, int depthBits, int stencilBits) {
 
 //************************************
 // Method:    CreateWindow
-// FullName:  BroGLWin::CreateWindow
+// FullName:  QuackWin::CreateWindow
 // Access:    public 
 // Returns:   bool
 // Qualifier:
@@ -54,7 +54,7 @@ void BroGLWin::CreatePFD(int colorBits, int depthBits, int stencilBits) {
 // Parameter: int height
 // Parameter: int colorBits
 //************************************
-bool BroGLWin::B_CreateWindow(int width, int height, int colorBits) {
+bool QuackWin::B_CreateWindow(int width, int height, int colorBits) {
 	if (!classRegistered) {
 		WNDCLASS wc;
 
@@ -83,7 +83,7 @@ bool BroGLWin::B_CreateWindow(int width, int height, int colorBits) {
 		hWnd = CreateWindowEx(
 			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
 			WINDOW_CLASS_NAME,
-			"BroGL",
+			"Quack",
 			WS_VISIBLE | WS_OVERLAPPEDWINDOW,
 			0,
 			0,
@@ -127,20 +127,20 @@ bool BroGLWin::B_CreateWindow(int width, int height, int colorBits) {
 
 //************************************
 // Method:    EndFrame
-// FullName:  BroGLWin::EndFrame
+// FullName:  QuackWin::EndFrame
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: void
 //************************************
-void BroGLWin::EndFrame(void) {
+void QuackWin::EndFrame(void) {
 	frameCount++;
 	SwapBuffers(hDC);
 }
 
 //************************************
 // Method:    Init
-// FullName:  BroGLWin::Init
+// FullName:  QuackWin::Init
 // Access:    public 
 // Returns:   void
 // Qualifier:
@@ -149,7 +149,7 @@ void BroGLWin::EndFrame(void) {
 // creates the window, etc. If this call is successful, a functional OpenGL
 // subsystem has been established.
 //************************************
-void BroGLWin::Init(void) {
+void QuackWin::Init(void) {
 	// init opengl
 	StartOpenGL();
 
@@ -159,12 +159,12 @@ void BroGLWin::Init(void) {
 
 //************************************
 // Method:    MakeContext
-// FullName:  BroGLWin::MakeContext
+// FullName:  QuackWin::MakeContext
 // Access:    public 
 // Returns:   int
 // Qualifier:
 //************************************
-int BroGLWin::MakeContext() {
+int QuackWin::MakeContext() {
 	int pixelformat;
 
 	// is the pixelformat already set?
@@ -204,13 +204,13 @@ int BroGLWin::MakeContext() {
 
 //************************************
 // Method:    StartOpenGL
-// FullName:  BroGLWin::StartOpenGL
+// FullName:  QuackWin::StartOpenGL
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: void
 //************************************
-void BroGLWin::StartOpenGL(void) {
+void QuackWin::StartOpenGL(void) {
 	// Load OpenGL
 
 	hDC = GetDC(GetDesktopWindow());
@@ -255,7 +255,7 @@ char translateKey(WPARAM wParam, LPARAM lParam) {
 	return 0;
 }
 
-LONG WINAPI BroGLWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LONG WINAPI QuackWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -264,7 +264,7 @@ LONG WINAPI BroGLWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	{
 									LPCREATESTRUCT cs = reinterpret_cast<LPCREATESTRUCT>(lParam);
 									void * lpCreateParam = cs->lpCreateParams;
-									BroGLWin *win = reinterpret_cast<BroGLWin *>(lpCreateParam);
+									QuackWin *win = reinterpret_cast<QuackWin *>(lpCreateParam);
 									assert(win == this);
 									return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
@@ -286,19 +286,19 @@ LONG WINAPI BroGLWin::MainWndProc(HWND n_hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 }
 
 // Static wndproc created in order to pass a function pointer
-LONG WINAPI BroGLWin::SWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
-	BroGLWin *bgl;
+LONG WINAPI QuackWin::SWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
+	QuackWin *bgl;
 
 	if (msg == WM_NCCREATE) {
 		LPCREATESTRUCT cs = reinterpret_cast<LPCREATESTRUCT>(lp);
 		void * lpCreateParam = cs->lpCreateParams;
-		bgl = reinterpret_cast<BroGLWin *>(lpCreateParam);
+		bgl = reinterpret_cast<QuackWin *>(lpCreateParam);
 		bgl->hWnd = hwnd;
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(bgl));
 		return DefWindowProc(hwnd, msg, wp, lp);
 	}
 	LONG_PTR userData = GetWindowLongPtr(hwnd, GWL_USERDATA);
-	bgl = reinterpret_cast<BroGLWin *>(userData);
+	bgl = reinterpret_cast<QuackWin *>(userData);
 	if (bgl) {
 		return bgl->MainWndProc(hwnd, msg, wp, lp);
 	} else {

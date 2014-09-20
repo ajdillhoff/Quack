@@ -5,24 +5,24 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/GL.h>
-#include "BroInput.h"
+#include "QuackInput.h"
 
 #pragma comment (lib, "opengl32.lib")
 
-#define WINDOW_CLASS_NAME "BroGL"
+#define WINDOW_CLASS_NAME "Quack"
 
-class BroGLWin {
+class QuackWin {
 public:
 	int frameCount;
-	Input *input;
+	QuackInput *input;
 
-	BroGLWin();
-	BroGLWin(HINSTANCE);
-	~BroGLWin();
+	QuackWin();
+	QuackWin(HINSTANCE);
+	~QuackWin();
 
 	//************************************
 	// Method:    CreatePFD
-	// FullName:  BroGLWin::CreatePFD
+	// FullName:  QuackWin::CreatePFD
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -36,7 +36,7 @@ public:
 
 	//************************************
 	// Method:    CreateWindow
-	// FullName:  BroGLWin::CreateWindow
+	// FullName:  QuackWin::CreateWindow
 	// Access:    public 
 	// Returns:   bool
 	// Qualifier:
@@ -48,7 +48,7 @@ public:
 
 	//************************************
 	// Method:    EndFrame
-	// FullName:  BroGLWin::EndFrame
+	// FullName:  QuackWin::EndFrame
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -58,7 +58,7 @@ public:
 
 	//************************************
 	// Method:    Init
-	// FullName:  BroGLWin::Init
+	// FullName:  QuackWin::Init
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -71,7 +71,7 @@ public:
 
 	//************************************
 	// Method:    MakeContext
-	// FullName:  BroGLWin::MakeContext
+	// FullName:  QuackWin::MakeContext
 	// Access:    public 
 	// Returns:   int
 	// Qualifier:
@@ -80,7 +80,7 @@ public:
 
 	//************************************
 	// Method:    StartOpenGL
-	// FullName:  BroGLWin::StartOpenGL
+	// FullName:  QuackWin::StartOpenGL
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:

@@ -1,5 +1,5 @@
 #include "BShared.h"
-#include "BroGLBackend.h"
+#include "QuackBackend.h"
 
 #pragma once
 class Renderer {
@@ -11,7 +11,7 @@ public:
 	shaderCommands_t input;
 
 	// Temp for debugging
-	BroGLBackend *backend;
+	QuackBackend *backend;
 
 	// Object information
 	Entity *currentEntity;
@@ -27,7 +27,7 @@ public:
 	int numPolyVerts;
 
 	Renderer();
-	Renderer(BroGLBackend *);
+	Renderer(QuackBackend *);
 	virtual ~Renderer();
 
 	//************************************

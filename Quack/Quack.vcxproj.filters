@@ -39,13 +39,7 @@
     <ClCompile Include="BMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BroGLWin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BroGLBackend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BroShader.cpp">
@@ -57,7 +51,13 @@
     <ClCompile Include="include\glm\detail\glm.cpp">
       <Filter>glm</Filter>
     </ClCompile>
-    <ClCompile Include="BroInput.cpp">
+    <ClCompile Include="QuackBackend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuackWin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuackInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,12 +81,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RefDef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BroGLWin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BroGLBackend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BroShader.h">
@@ -527,7 +521,13 @@
     <ClInclude Include="include\glm\vector_relational.hpp">
       <Filter>glm</Filter>
     </ClInclude>
-    <ClInclude Include="BroInput.h">
+    <ClInclude Include="QuackBackend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuackWin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuackInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

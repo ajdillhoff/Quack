@@ -12,7 +12,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{87A69EE8-462E-4170-9FD6-179A6A7F536C}</ProjectGuid>
-    <RootNamespace>BroGL</RootNamespace>
+    <RootNamespace>Quack</RootNamespace>
+    <ProjectName>Quack</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -70,9 +71,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BMath.cpp" />
-    <ClCompile Include="BroGLBackend.cpp" />
-    <ClCompile Include="BroGLWin.cpp" />
-    <ClCompile Include="BroInput.cpp" />
+    <ClCompile Include="QuackBackend.cpp" />
+    <ClCompile Include="QuackWin.cpp" />
+    <ClCompile Include="QuackInput.cpp" />
     <ClCompile Include="BroShader.cpp" />
     <ClCompile Include="BShared.h" />
     <ClCompile Include="Camera.cpp" />
@@ -85,9 +86,9 @@
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BroGLBackend.h" />
-    <ClInclude Include="BroGLWin.h" />
-    <ClInclude Include="BroInput.h" />
+    <ClInclude Include="QuackBackend.h" />
+    <ClInclude Include="QuackWin.h" />
+    <ClInclude Include="QuackInput.h" />
     <ClInclude Include="BroShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />

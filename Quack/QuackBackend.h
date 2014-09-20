@@ -1,14 +1,14 @@
 #pragma once
 
-#include "BroGLWin.h"
+#include "QuackWin.h"
 #include "Types.h"
 #include "Entity.h"
 #include "RefDef.h"
 #include "BShared.h"
-#include "BroShader.h"
-#include "BroInput.h"
+#include "QuackShader.h"
+#include "QuackInput.h"
 
-class BroGLBackend {
+class QuackBackend {
 public:
 	drawSurf_t drawSurfs[MAX_DRAWSURFS];
 	Entity entities[MAX_ENTITIES];
@@ -23,14 +23,14 @@ public:
 
 	RefDef *refdef;
 
-	BroGLWin *win; // reference to window
+	QuackWin *win; // reference to window
 
 	// Shader debug
-	BroShader *shader;
+	QuackShader *shader;
 
-	BroGLBackend();
-	BroGLBackend(BroGLWin*);
-	~BroGLBackend();
+	QuackBackend();
+	QuackBackend(QuackWin*);
+	~QuackBackend();
 
 	//************************************
 	// Method:    BeginDrawingView
@@ -43,7 +43,7 @@ public:
 
 	//************************************
 	// Method:    CreateShaders
-	// FullName:  BroGLBackend::CreateShaders
+	// FullName:  QuackBackend::CreateShaders
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:
@@ -96,7 +96,7 @@ public:
 
 	//************************************
 	// Method:    SetDefaultState
-	// FullName:  BroGLBackend::SetDefaultState
+	// FullName:  QuackBackend::SetDefaultState
 	// Access:    public 
 	// Returns:   void
 	// Qualifier:

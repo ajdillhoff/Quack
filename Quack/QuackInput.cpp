@@ -1,22 +1,22 @@
 #include <iostream>
-#include "BroInput.h"
+#include "QuackInput.h"
 
-Input::Input() {
+QuackInput::QuackInput() {
 }
 
-Input::Input(Camera* nc) {
+QuackInput::QuackInput(Camera* nc) {
 	camera = nc;
 }
 
 //************************************
 // Method:    HandleKeyPress
-// FullName:  Input::handleKeyPress
+// FullName:  QuackInput::handleKeyPress
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: char key
 //************************************
-void Input::HandleKeyPress(char key) {
+void QuackInput::HandleKeyPress(char key) {
 	glm::mat4 translateMatrix;
 	glm::mat4 transformMatrix;
 	glm::vec4 forwardDirection = glm::vec4(0.0, 0.0, 0.2, 1.0);

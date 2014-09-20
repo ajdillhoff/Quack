@@ -6,7 +6,7 @@ Renderer::Renderer() {
 	// Set up some default view parameters
 }
 
-Renderer::Renderer(BroGLBackend* be) {
+Renderer::Renderer(QuackBackend* be) {
 	refdef = new RefDef();
 
 	backend = be;
