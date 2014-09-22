@@ -253,11 +253,12 @@ void Entity::GenerateSquareEntity() {
 // Parameter: char * imagePath
 //************************************
 int Entity::LoadTexture(char * imagePath) {
-	unsigned char header[54];
+	char header[54];
 	unsigned int dataPos;
 	unsigned int width, height;
 	unsigned int imageSize;
-	unsigned char * data;
+	char * data;
+	unsigned int length;
 	ifstream file;
 
 	file.open(imagePath, ios::in);
@@ -265,9 +266,17 @@ int Entity::LoadTexture(char * imagePath) {
 		return 0; // can't open
 	}
 
-	if (fread(header, 1, 54, file) != 54) {
+	// Get the length
+	file.seekg(0, file.end);
+	length = file.tellg();
+	file.seekg(0, file.beg);
+
+	if (length < 54) {
 		return 0; // not a correct bmp file
 	}
+
+	// read the header
+	file.read(header, 54);
 
 	if (header[0] != 'B' || header[1] != 'M') {
 		return 0; // not a correct bmp file
@@ -287,15 +296,17 @@ int Entity::LoadTexture(char * imagePath) {
 		dataPos = 54;
 	}
 
-	data = new unsigned char[imageSize];
+	data = new char[imageSize];
 
-	fread(data, 1, imageSize, file);
+	file.read(data, imageSize);
 
-	fclose(file);
+	file.close();
+
+	return 1;
 
 	// create the texture
-	GLuint textureID;
-	glGenTextures(1, &textureID);
+	//GLuint textureID;
+	//glGenTextures(1, &textureID);
 
 }
 

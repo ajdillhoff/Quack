@@ -1,4 +1,6 @@
 #include "Types.h"
+#include "BShared.h"
+#include <fstream>
 
 #pragma once
 class Entity {
